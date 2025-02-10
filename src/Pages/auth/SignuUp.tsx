@@ -2,8 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import axios from "axios";
 import { useState } from "react";
+import { AuthProps } from "../../UserTypes";
 
-const Signup = () => {
+const Signup = ({ login }: AuthProps) => {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -36,8 +37,7 @@ const Signup = () => {
           username: username,
           email: email,
         });
-
-        // setData(response.data)
+        login(response.data);
 
         navigate("/home");
         setLoading(false);

@@ -1,6 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserProps } from "../UserTypes";
+import { useEffect, useState } from "react";
 
-const Welcome = () => {
+type WelcomeProps = UserProps;
+
+const Welcome = ({ user }: WelcomeProps) => {
+  const navigate = useNavigate();
+  //
+  useEffect(() => {
+    const chackUser = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+
+      if (user) {
+        navigate("/home");
+      }
+    };
+    chackUser();
+  }, [navigate, user]);
+
   return (
     <>
       <section className="flex items-center justify-center bg-blue-500 h-[100vh] text-white text-center px-4">
