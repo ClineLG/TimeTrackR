@@ -2,8 +2,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Input from "../../components/Input";
 import axios from "axios";
 import { useState } from "react";
+import { AuthProps } from "../../UserTypes";
 
-const ResetPassword = () => {
+const ResetPassword = ({ login }: AuthProps) => {
   const location = useLocation();
   const email: string = location.state;
   const navigate = useNavigate();
@@ -32,8 +33,7 @@ const ResetPassword = () => {
             email: email,
           }
         );
-
-        // setData(response.data)
+        login(response.data);
 
         navigate("/home");
         setLoading(false);

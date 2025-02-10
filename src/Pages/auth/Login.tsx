@@ -2,8 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/Input";
 import axios from "axios";
 import { useState } from "react";
+import { AuthProps } from "../../UserTypes";
 
-const Login = () => {
+const Login = ({ login }: AuthProps) => {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -33,7 +34,7 @@ const Login = () => {
           email: email,
         });
 
-        // setData(response.data)
+        login(response.data);
 
         navigate("/home");
         setLoading(false);
@@ -68,8 +69,8 @@ const Login = () => {
         />
         <Link to="/password">mot de passe oublié?</Link>
         {error && <p className="bg-red-500">{error}</p>}
-        <button disabled={loading ? true : false}> S'enregistrer</button>
-        <Link to="/login">Déjà inscrit ? Se connecter</Link>
+        <button disabled={loading ? true : false}> Se connecter</button>
+        <Link to="/signup">Pas de compte ? S'inscrire</Link>
       </form>
     </section>
   );

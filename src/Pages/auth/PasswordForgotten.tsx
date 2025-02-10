@@ -68,7 +68,7 @@ const PasswordForgotten = () => {
           className="bg-green-500 flex flex-col rounded-xl items-center"
         >
           <h1>Mot de passe oublié?</h1>
-          <p>Pas de panique nous allons t'envoyer un lien pour </p>
+          <p>Pas de panique nous allons t'envoyer un code pour </p>
           <Input
             setError={setError}
             placeholder="Email"
