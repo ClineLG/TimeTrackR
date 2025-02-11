@@ -1,14 +1,13 @@
 import { createContext } from "react";
-import { UserType } from "../UserTypes";
 
 type UserContextType = {
-  user: UserType | null;
-  login: (userInfo: UserType) => void;
+  checkUser: () => string | undefined;
+  login: (token: string) => void;
   logout: () => void;
 };
 
 const defaultContextValue: UserContextType = {
-  user: null,
+  checkUser: () => undefined,
   login: () => {},
   logout: () => {},
 };
