@@ -13,60 +13,25 @@ import Welcome from "./Pages/Welcome";
 import ResetPassword from "./Pages/auth/resetPassword";
 
 import { UserContext } from "./context/UserContext";
-import axios from "axios";
-import { useEffect, useState } from "react";
-
-import { UserType } from "./UserTypes";
 
 const App = () => {
-  const [user, setUser] = useState<UserType | null>(null);
-
-  const login = (userInfo: UserType) => {
-    Cookies.set("token", userInfo.token, { expires: 30 });
-    console.log("userInfo", userInfo);
-    const obj = {
-      id: userInfo.id,
-      token: userInfo.token,
-      username: userInfo.username,
-    };
-    setUser(obj);
-    console.log(user);
+  const login = (token: string) => {
+    Cookies.set("token", token, { expires: 30 });
   };
+
   const logout = () => {
     Cookies.remove("token");
-    setUser(null);
   };
 
-  useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            "http://localhost:3000/user/details",
-            {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            }
-          );
-          console.log("response", response.data);
-          setUser(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }
-  }, []);
+  const checkUser = () => Cookies.get("token");
 
   return (
     <Router>
-      <UserContext.Provider value={{ user, logout, login }}>
-        <Header user={user} />
+      <UserContext.Provider value={{ checkUser, logout, login }}>
+        <Header checkUser={checkUser} />
         <Routes>
-          <Route path="/home" element={<Home user={user} />} />
-          <Route path="/" element={<Welcome user={user} />} />
+          <Route path="/home" element={<Home checkUser={checkUser} />} />
+          <Route path="/" element={<Welcome checkUser={checkUser} />} />
           <Route path="/signup" element={<Signup login={login} />} />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="/password" element={<PasswordForgotten />} />

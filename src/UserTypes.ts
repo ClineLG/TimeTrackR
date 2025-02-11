@@ -1,11 +1,5 @@
-export type UserType = {
-  id: string;
-  token: string;
-  username: string;
-};
-
-export type UserProps = { user: UserType | null };
+export type TokenProps = { checkUser: () => string | undefined };
 
 export type AuthProps = {
-  login: (user: UserType) => void;
+  login: (token: string) => void;
 };
