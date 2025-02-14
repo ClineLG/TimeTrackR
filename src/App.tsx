@@ -40,7 +40,10 @@ const App = () => {
             element={<ResetPassword login={login} />}
           />
 
-          <Route path="/statistics" element={<Statistics />} />
+          <Route
+            path="/statistics"
+            element={<Statistics checkUser={checkUser} />}
+          />
         </Routes>
         <Footer />
       </UserContext.Provider>
