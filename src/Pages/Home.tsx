@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { TokenProps } from "../UserTypes";
 import { Activity } from "../components/Activity";
-import ModalEdit from "../components/modalEdit";
+import ModalEdit from "../components/ModalEdit";
 
 const Home = ({ checkUser }: TokenProps) => {
   const [activities, setActivities] = useState<

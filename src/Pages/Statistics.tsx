@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+// import axios from "axios";
+import { useState } from "react";
 import {
   VictoryChart,
   VictoryBar,
@@ -7,10 +7,14 @@ import {
   VictoryLabel,
   VictoryPie,
 } from "victory";
-import { TokenProps } from "../UserTypes";
-import totalHours from "../utils/totalInHours";
 
-const Statistics = ({ checkUser }: TokenProps) => {
+import totalHours from "../utils/totalInHours";
+import Monthly from "../components/Monthly";
+import Weekly from "../components/Weekly";
+import Year from "../components/year";
+import Daily from "../components/daily";
+
+const Statistics = () => {
   const [Data, setData] = useState<
     | {
         x: string;
@@ -18,78 +22,81 @@ const Statistics = ({ checkUser }: TokenProps) => {
       }[]
     | undefined
   >(undefined);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/activities/dayly/?date=2025-02-14",
-          {
-            headers: {
-              Authorization: "Bearer " + checkUser(),
-            },
-          }
-        );
-        const daylyData = [...response.data].map(
-          (activity: { id: string; name: string; time: number }) => {
-            return { x: activity.name, y: activity.time };
-          }
-        );
-        setData(daylyData);
-        console.log(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
+  const [error, setError] = useState("");
+  const [selectedTime, setSelectedTime] = useState("daily");
 
-  return loading ? (
-    <div>Loading</div>
-  ) : (
+  const handleSelectTime = (time: string) => setSelectedTime(time);
+
+  const ComponentSelected = () => {
+    switch (selectedTime) {
+      case "daily":
+        return <Daily setData={setData} setError={setError} />;
+        break;
+      case "monthly":
+        return <Monthly setData={setData} setError={setError} />;
+        break;
+      case "weekly":
+        return <Weekly setData={setData} setError={setError} />;
+        break;
+      case "year":
+        return <Year setData={setData} setError={setError} />;
+        break;
+    }
+  };
+
+  return (
     <section>
       <h1>Statistics</h1>
       <div>
-        <button>Année</button>
-        <button>Mois</button>
-        <button>semiane</button>
-        <button>jour</button>
+        <button onClick={() => handleSelectTime("year")}>Année</button>
+        <button onClick={() => handleSelectTime("monthly")}>Mois</button>
+        <button onClick={() => handleSelectTime("weekly")}>semiane</button>
+        <button onClick={() => handleSelectTime("daily")}>jour</button>
       </div>
       <div>
         <button>pie</button>
         <button>bar</button>
       </div>
       <div>
-        <div>
-          <VictoryChart domainPadding={{ x: 20 }} theme={VictoryTheme.clean}>
-            <VictoryBar
-              data={Data}
-              labels={({ datum }) => totalHours(datum.y)} // Récupère et affiche la valeur 'y' comme texte
-              labelComponent={
-                <VictoryLabel
-                  dy={-50} // Décale le label vers le haut (ajuste selon le besoin)
-                />
-              }
-            />
-          </VictoryChart>
-        </div>
+        {ComponentSelected()}
+        {/* Ajout pending et error et loading */}
 
-        <VictoryPie
-          data={Data}
-          colorScale="cool"
-          innerRadius={50}
-          labelRadius={70}
-          padAngle={5}
-          labels={({ datum }) => `${datum.x}`} // Affiche l'étiquette avec la valeur
-          style={{
-            labels: { fill: "white", fontSize: 4, fontWeight: "bold" }, // Style des labels
-          }}
-          theme={VictoryTheme.material}
-          labelPlacement="perpendicular" // Ajuste l'orientation des labels
-          // Label Angle - Si nécessaire pour éviter le chevauchement
-          labelAngle={({ datum }) => (datum.y > 30 ? 0 : 45)} // Rotation conditionnelle des labels
-        />
+        {error ? (
+          error
+        ) : (
+          <>
+            <div>
+              <VictoryChart
+                domainPadding={{ x: 20 }}
+                theme={VictoryTheme.clean}
+              >
+                <VictoryBar
+                  data={Data}
+                  labels={({ datum }) => totalHours(datum.y)} // Récupère et affiche la valeur 'y' comme texte
+                  labelComponent={
+                    <VictoryLabel
+                      dy={-50} // Décale le label vers le haut (ajuste selon le besoin)
+                    />
+                  }
+                />
+              </VictoryChart>
+            </div>
+
+            <VictoryPie
+              data={Data}
+              colorScale="cool"
+              innerRadius={50}
+              labelRadius={70}
+              padAngle={5}
+              labels={({ datum }) => `${datum.x}`} // Affiche l'étiquette avec la valeur
+              style={{
+                labels: { fill: "white", fontSize: 4, fontWeight: "bold" }, // Style des labels
+              }}
+              theme={VictoryTheme.material}
+              labelPlacement="perpendicular" // Ajuste l'orientation des labels
+            />
+          </>
+        )}
       </div>
     </section>
   );
