@@ -45,11 +45,12 @@ const ResetPassword = ({ login }: AuthProps) => {
   };
 
   return (
-    <section>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-green-500 flex flex-col rounded-xl items-center"
-      >
+    <section className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h1 className=" text-center text-2xl font-semibold text-gray-800 mb-6">
+        Réinitialisation du mot de passe
+      </h1>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           setError={setError}
           placeholder="Mot de Passe"
@@ -58,7 +59,6 @@ const ResetPassword = ({ login }: AuthProps) => {
           setState={setPassword}
           state={password}
         />
-
         <Input
           setError={setError}
           placeholder="Confirmation du Mot de Passe"
@@ -67,9 +67,15 @@ const ResetPassword = ({ login }: AuthProps) => {
           setState={setConfirmPassword}
           state={confirmPassword}
         />
-
-        {error && <p className="bg-red-500">{error}</p>}
-        <button disabled={loading ? true : false}>Enregistrer</button>
+        <div className="flex-col flex justify-center">
+          {error && <p className="bg-red-500">{error}</p>}
+          <button
+            className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-md  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            disabled={loading ? true : false}
+          >
+            Enregistrer
+          </button>
+        </div>
       </form>
     </section>
   );

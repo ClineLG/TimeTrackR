@@ -1,10 +1,7 @@
-import { Link, Navigate } from "react-router-dom";
-import { TokenProps } from "../UserTypes";
+import { Link } from "react-router-dom";
 
-const Welcome = ({ checkUser }: TokenProps) => {
-  return checkUser() ? (
-    <Navigate to="/home" />
-  ) : (
+const Welcome = () => {
+  return (
     <>
       <section className="flex items-center justify-center bg-blue-500 h-[100vh] text-white text-center px-4">
         <div>

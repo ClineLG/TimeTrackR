@@ -61,32 +61,43 @@ const PasswordForgotten = () => {
   };
 
   return (
-    <section>
+    <section className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       {!data ? (
-        <form
-          onSubmit={handleSubmit}
-          className="bg-green-500 flex flex-col rounded-xl items-center"
-        >
-          <h1>Mot de passe oublié?</h1>
-          <p>Pas de panique nous allons t'envoyer un code pour </p>
-          <Input
-            setError={setError}
-            placeholder="Email"
-            name="email"
-            setState={setEmail}
-            state={email}
-          />
-
-          {error && <p className="bg-red-500">{error}</p>}
-          <button disabled={loading ? true : false}> Envoyer </button>
-        </form>
+        <>
+          <h1 className=" text-center text-2xl font-semibold text-gray-800 mb-6">
+            Mot de Passe oublié ?
+          </h1>
+          <p className="text-[14px] text-center m-5 text-gray-600">
+            Pas de panique nous allons t'envoyer un code pour réinitialiser ton
+            mot de passe.
+          </p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              setError={setError}
+              placeholder="Email"
+              name="email"
+              setState={setEmail}
+              state={email}
+            />
+            <div className="flex-col flex justify-center">
+              {error && <p className="bg-red-500">{error}</p>}
+              <button
+                className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-md  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                disabled={loading ? true : false}
+              >
+                Envoyer
+              </button>
+            </div>
+          </form>
+        </>
       ) : (
-        <form
-          onSubmit={handleSubmit2}
-          className="bg-green-500 flex flex-col rounded-xl items-center"
-        >
-          <h1>Mot de passe oublié?</h1>
-          <p>Pas de panique nous allons t'envoyer un lien pour régler ça !</p>
+        <form onSubmit={handleSubmit2} className="space-y-4">
+          <h1 className=" text-center text-2xl font-semibold text-gray-800 mb-6">
+            E-mail envoyé !{" "}
+          </h1>{" "}
+          <p className="text-[14px] text-center m-5 text-gray-600">
+            Inscrit le code que tu as recus par email dans le champs ci-dessous
+          </p>
           <Input
             setError={setError}
             placeholder="Code reçu"
@@ -94,9 +105,15 @@ const PasswordForgotten = () => {
             setState={setCode}
             state={code}
           />
-
-          {error && <p className="bg-red-500">{error}</p>}
-          <button disabled={loading ? true : false}> Envoyer </button>
+          <div className="flex-col flex justify-center">
+            {error && <p className="bg-red-500">{error}</p>}
+            <button
+              disabled={loading ? true : false}
+              className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-md  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              Envoyer
+            </button>
+          </div>
         </form>
       )}
     </section>
