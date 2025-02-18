@@ -49,11 +49,11 @@ const Signup = ({ login }: AuthProps) => {
   };
 
   return (
-    <section>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-green-500 flex flex-col rounded-xl items-center"
-      >
+    <section className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h1 className=" text-center text-2xl font-semibold text-gray-800 mb-6">
+        Inscription
+      </h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           setError={setError}
           placeholder="Email"
@@ -85,8 +85,16 @@ const Signup = ({ login }: AuthProps) => {
           state={confirmPassword}
         />
         {error && <p className="bg-red-500">{error}</p>}
-        <button disabled={loading ? true : false}> S'enregistrer</button>
-        <Link to="/login">Déjà inscrit ? Se connecter</Link>
+
+        <div className="flex-col flex justify-center">
+          <button disabled={loading ? true : false}>S'enregistrer</button>
+          <Link
+            to="/login"
+            className="text-center mt-5 text-indigo-600 underline"
+          >
+            Déjà inscrit ? Se connecter
+          </Link>
+        </div>
       </form>
     </section>
   );

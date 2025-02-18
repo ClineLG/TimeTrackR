@@ -1,28 +1,18 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { ActivityProps } from "../ActivitiesProps";
 
-const Year = ({
-  setData,
-  setError,
-}: {
-  setData: React.Dispatch<
-    React.SetStateAction<
-      | {
-          x: string;
-          y: number;
-        }[]
-      | undefined
-    >
-  >;
-  setError: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const Year = (props: ActivityProps) => {
+  const { setData, setError, setLoading } = props;
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const { checkUser } = useContext(UserContext);
   useEffect(() => {
     setError("");
+
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:3000/activities/year/?year=${year}`,
           {
@@ -38,10 +28,18 @@ const Year = ({
         );
         setData(YearData);
         console.log(response.data);
-        // setLoading(false);
+        setLoading(false);
       } catch (error) {
         console.log(error);
-        setError("Pas de donées pour cette date");
+        if (
+          axios.isAxiosError(error) &&
+          error.response?.data.message === "no data"
+        ) {
+          setError("Données indisponibles");
+        } else {
+          setError("Une erreur est survenue");
+        }
+        setLoading(false);
       }
     };
     fetchData();
@@ -52,14 +50,14 @@ const Year = ({
       <div className="flex items-center justify-center mb-4">
         <button
           onClick={() => setYear(year - 1)}
-          className="px-4 py-2 bg-blue-500 text-white rounded-l-md"
+          className="px-4 py-2 bg-indigo-600 w-40 text-white rounded-l-md"
         >
           Précédent
         </button>
-        <h1 className="mx-4 text-xl font-semibold">{year}</h1>
+        <h1 className="mx-4 text-indigo-600 text-xl font-semibold">{year}</h1>
         <button
           onClick={() => setYear(year + 1)}
-          className="px-4 py-2 bg-blue-500 text-white rounded-r-md"
+          className="px-4 py-2 bg-indigo-600 w-40 text-white rounded-r-md"
         >
           Suivant
         </button>

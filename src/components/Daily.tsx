@@ -4,27 +4,18 @@ import { useEffect, useState, useContext } from "react";
 import dateFormat from "../utils/dateFormat";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { ActivityProps } from "../ActivitiesProps";
 
-const Daily = ({
-  setData,
-}: {
-  setData: React.Dispatch<
-    React.SetStateAction<
-      | {
-          x: string;
-          y: number;
-        }[]
-      | undefined
-    >
-  >;
-  setError: React.Dispatch<React.SetStateAction<string>>;
-}) => {
-  //   const [loading, setLoading] = useState(true);
+const Daily = (props: ActivityProps) => {
+  const { setData, setError, setLoading } = props;
   const [date, setDate] = useState<string>(dateFormat(new Date()));
   const { checkUser } = useContext(UserContext);
   useEffect(() => {
+    setError("");
+
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(
           `http://localhost:3000/activities/daily/?date=${date}`,
           {
@@ -39,10 +30,19 @@ const Daily = ({
           }
         );
         setData(daylyData);
-        console.log(response.data);
-        // setLoading(false);
+        // console.log(response.data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        if (
+          axios.isAxiosError(error) &&
+          error.response?.data.message === "no data"
+        ) {
+          setError("Données indisponibles");
+        } else {
+          setError("Une erreur est survenue");
+        }
+        setLoading(false);
       }
     };
     fetchData();
@@ -62,7 +62,7 @@ const Daily = ({
         }
       }}
       value={date} // La date affichée dans le calendrier
-      className="shadow-lg rounded-lg border border-gray-300 place-items-center"
+      className="shadow-lg rounded-lg border border-gray-300 place-items-center self-center m-5"
     />
   );
 };

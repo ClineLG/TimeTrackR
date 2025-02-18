@@ -4,21 +4,10 @@ import { useEffect, useState, useContext } from "react";
 // import dateFormat from "../utils/dateFormat";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
+import { ActivityProps } from "../ActivitiesProps";
 
-const Monthly = ({
-  setData,
-}: {
-  setData: React.Dispatch<
-    React.SetStateAction<
-      | {
-          x: string;
-          y: number;
-        }[]
-      | undefined
-    >
-  >;
-  setError: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const Monthly = (props: ActivityProps) => {
+  const { setData, setError, setLoading } = props;
   const [year, setYear] = useState<string>(new Date().getFullYear().toString());
   const [month, setMonth] = useState<string>(
     (new Date().getMonth() + 1).toString()
@@ -26,8 +15,12 @@ const Monthly = ({
   const [date, setDate] = useState<Date | null>(null);
   const { checkUser } = useContext(UserContext);
   useEffect(() => {
+    setError("");
+
     const fetchData = async () => {
       try {
+        setLoading(true);
+
         const response = await axios.get(
           `http://localhost:3000/activities/month/?year=${year}&month=${month}`,
           {
@@ -43,9 +36,17 @@ const Monthly = ({
         );
         setData(monthlyData);
         console.log(response.data);
-        // setLoading(false);
+        setLoading(false);
       } catch (error) {
-        console.log(error);
+        if (
+          axios.isAxiosError(error) &&
+          error.response?.data.message === "no data"
+        ) {
+          setError("Données indisponibles");
+        } else {
+          setError("Une erreur est survenue");
+        }
+        setLoading(false);
       }
     };
     fetchData();
@@ -60,7 +61,7 @@ const Monthly = ({
       }}
       view="year"
       value={date}
-      className="shadow-lg rounded-lg border border-gray-300 place-items-center"
+      className="shadow-lg rounded-lg border border-gray-300 place-items-center self-center m-5"
     />
   );
 };
