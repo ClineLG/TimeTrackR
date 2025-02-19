@@ -23,6 +23,7 @@ const Home = ({ checkUser }: TokenProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [idToEdit, setIdToEdit] = useState({ name: "", id: "" });
+  const [user, setUser] = useState({ name: "", quote: "" });
   //USEREDUCER
   // const initialState={activities:[],loading:true,error:"",isLoading:false,create:false,newActivity:''}
 
@@ -45,8 +46,9 @@ const Home = ({ checkUser }: TokenProps) => {
           Authorization: "Bearer " + checkUser(),
         },
       });
-      console.log("Response<<<<", response.data);
-      setActivities(response.data);
+      // console.log("Response<<<<", response.data);
+      setActivities(response.data.activities);
+      setUser(response.data.user);
     } catch (error) {
       console.log(error);
       setError("une erreur est survenue");
@@ -82,6 +84,7 @@ const Home = ({ checkUser }: TokenProps) => {
       }
     }
   };
+
   ///////////////////////////////////////
   const handleDelete = async (id: string) => {
     try {
@@ -108,32 +111,49 @@ const Home = ({ checkUser }: TokenProps) => {
   }, []);
 
   return loading ? (
-    <>
-      <div>loading</div>
-    </>
+    <div>loading</div>
   ) : (
-    <section className="relative">
-      <h1>Mes projets</h1>
+    <section className="relative p-6 space-y- rounded-lg shadow-md">
+      <div>
+        <p className="text-3xl font-semibold text-gray-900 text-center">
+          Hello {user.name} 👋
+        </p>
+        <p>{user.quote}</p>
+        <p></p>
+      </div>
+      <h1 className="text-2xl font-semibold text-gray-900 text-center">
+        Mes Activité
+      </h1>
       <div
         onClick={() => setCreate(true)}
-        className="bg-green-400 text-white font-semibold py-2 px-4 rounded-lg inline hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="bg-indigo-500 text-white font-semibold py-2 px-6 rounded-lg inline-block cursor-pointer hover:bg-indigo-600 focus:outline-none  transition duration-300"
       >
         New project
       </div>
-      {error && <p>{error}</p>}
-      <form className={!create ? "hidden" : ""} onSubmit={handleSubmit}>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      <form
+        className={`${!create ? "hidden" : ""} space-y-4`}
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           name="project"
-          placeholder="my new project"
+          placeholder="New Activity"
           onChange={(event) => setNewActivity(event.target.value)}
           value={newActivity}
+          className="w-full p-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
         />
-        <button disabled={isLoading ? true : false}>Add </button>
+        <button
+          disabled={isLoading}
+          className="w-full py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-300"
+        >
+          {" "}
+          Add{" "}
+        </button>
       </form>
       {edit && <ModalEdit setEdit={setEdit} idToEdit={idToEdit} />}
 
-      <ul>
+      <ul className="space-y-4">
         {activities?.map((activity) => (
           <Activity
             setEdit={setEdit}
