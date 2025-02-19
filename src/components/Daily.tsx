@@ -61,8 +61,8 @@ const Daily = (props: ActivityProps) => {
           }
         }
       }}
-      value={date} // La date affichée dans le calendrier
-      className="shadow-lg rounded-lg border border-gray-300 place-items-center self-center m-5"
+      value={date}
+      className="shadow-lg rounded-b-4xl  place-items-center p-4 self-center m-5"
     />
   );
 };

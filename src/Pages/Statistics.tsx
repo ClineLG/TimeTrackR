@@ -6,6 +6,7 @@ import {
   VictoryLabel,
   VictoryPie,
   VictoryAxis,
+  VictoryTooltip,
 } from "victory";
 
 import totalHours from "../utils/totalInHours";
@@ -13,7 +14,8 @@ import Monthly from "../components/Monthly";
 import Weekly from "../components/Weekly";
 import Year from "../components/year";
 import Daily from "../components/Daily";
-import { ButtonStatistics } from "../components/buttonStattistics";
+import { ButtonStatistics } from "../components/ButtonStattistics";
+import { data } from "react-router-dom";
 
 //comparer visuellement
 
@@ -96,7 +98,7 @@ const Statistics = () => {
       </div>
 
       <div className="mb-4 flex flex-col justify-center w-full">
-        {ComponentSelected()}{" "}
+        {ComponentSelected()}
         <div className="flex justify-center m-5">
           <button
             onClick={() => setPie(true)}
@@ -111,7 +113,7 @@ const Statistics = () => {
             bar
           </button>
         </div>
-        <div className="max-w-4xl mx-auto">
+        <div className="">
           {loading ? (
             <div className="text-center text-xl">loading</div>
           ) : error ? (
@@ -119,34 +121,51 @@ const Statistics = () => {
           ) : pie ? (
             <VictoryPie
               data={Data}
-              colorScale="cool"
-              innerRadius={50}
-              labelRadius={70}
-              padAngle={5}
-              labels={({ datum }) => `${datum.x}\n${totalHours(datum.y)}`} // Affiche l'étiquette avec la valeur
-              style={{
-                labels: { fill: "white", fontSize: 4, fontWeight: "bold" }, // Style des labels
-              }}
-              theme={VictoryTheme.material}
-              labelPlacement="perpendicular" // Ajuste l'orientation des labels
+              theme={VictoryTheme.clean}
+              // padAngle={5}
+              radius={({ datum }) => datum.y * 0.08 + 20}
+              labelIndicator
+              labelIndicatorInnerOffset={15}
+              labels={({ datum }) => `${datum.x}\n${totalHours(datum.y)}`}
+
+              // Affiche l'étiquette avec la valeur
+              // style={{
+              //   labels: { fill: "white", fontSize: 4, fontWeight: "bold" }, // Style des labels
+              // }}
+              // theme={VictoryTheme.material}
+              // labelPlacement="perpendicular" // Ajuste l'orientation des labels
             />
           ) : (
-            <div className="w-full max-w-xl mx-auto">
-              <VictoryChart
-                domainPadding={{ x: 20 }}
-                theme={VictoryTheme.clean}
-              >
-                <VictoryBar
-                  data={Data}
-                  labels={({ datum }) => totalHours(datum.y)} // Récupère et affiche la valeur 'y' comme texte
-                  labelComponent={
-                    <VictoryLabel
-                      dy={-30} // Décale le label vers le haut (ajuste selon le besoin)
+            <div className="w-full flex justify-center">
+              <div className="w-4/5 overflow-x-auto mx-auto bg-amber-400 flex justify-center">
+                <div style={{ width: Data.length * 60 }}>
+                  <VictoryChart
+                    domainPadding={{ x: 1 }}
+                    theme={VictoryTheme.clean}
+                    width={Data.length * 60}
+                    height={500}
+                  >
+                    <VictoryBar
+                      barWidth={40}
+                      data={Data}
+                      labelComponent={<VictoryTooltip />}
+                      labels={({ datum }) => totalHours(datum.y)}
+                      // labels={({ datum }) => }
+                      // labelComponent={<VictoryLabel dy={-30} />}
+                      style={{
+                        data: {
+                          fill: "#165DFB",
+                          fillOpacity: 0.4,
+                        },
+                        labels: {
+                          fill: "#165DFB",
+                        },
+                      }}
                     />
-                  }
-                />
-                <VictoryAxis />
-              </VictoryChart>
+                    <VictoryAxis />
+                  </VictoryChart>
+                </div>
+              </div>
             </div>
           )}
         </div>{" "}
