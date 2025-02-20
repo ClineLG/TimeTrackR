@@ -35,6 +35,9 @@ const Monthly = (props: ActivityProps) => {
           }
         );
         setData(monthlyData);
+        if (monthlyData.length < 1) {
+          setError("Pas de données disponnibles");
+        }
         console.log(response.data);
         setLoading(false);
       } catch (error) {

@@ -27,6 +27,9 @@ const Year = (props: ActivityProps) => {
           }
         );
         setData(YearData);
+        if (YearData.length < 1) {
+          setError("Pas de données disponnibles");
+        }
         console.log(response.data);
         setLoading(false);
       } catch (error) {
@@ -47,17 +50,17 @@ const Year = (props: ActivityProps) => {
   //   const weekArr = Array.from({ length: 52 }, (_, i) => i + 1);
   return (
     <div>
-      <div className="flex items-center justify-center mb-4">
+      <div className="flex items-center justify-center mb-4  bg-indigo-600 p-4 rounded-2xl">
         <button
           onClick={() => setYear(year - 1)}
-          className="px-4 py-2 bg-indigo-600 w-40 text-white rounded-l-md"
+          className="px-4 py-2 bg-white w-40 text-indigo-600 font-bold rounded-2xl"
         >
           Précédent
         </button>
-        <h1 className="mx-4 text-indigo-600 text-xl font-semibold">{year}</h1>
+        <h1 className="mx-4 text-white text-xl font-semibold"> {year}</h1>
         <button
           onClick={() => setYear(year + 1)}
-          className="px-4 py-2 bg-indigo-600 w-40 text-white rounded-r-md"
+          className="px-4 py-2 bg-white w-40 text-indigo-600 font-bold rounded-2xl"
         >
           Suivant
         </button>
