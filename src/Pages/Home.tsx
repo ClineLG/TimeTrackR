@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { TokenProps } from "../UserTypes";
 import { Activity } from "../components/Activity";
 import ModalEdit from "../components/ModalEdit";
+import { MdAddCircleOutline } from "react-icons/md";
 
 const Home = ({ checkUser }: TokenProps) => {
   const [activities, setActivities] = useState<
@@ -24,6 +25,7 @@ const Home = ({ checkUser }: TokenProps) => {
   const [edit, setEdit] = useState(false);
   const [idToEdit, setIdToEdit] = useState({ name: "", id: "" });
   const [user, setUser] = useState({ name: "", quote: "" });
+
   //USEREDUCER
   // const initialState={activities:[],loading:true,error:"",isLoading:false,create:false,newActivity:''}
 
@@ -111,59 +113,61 @@ const Home = ({ checkUser }: TokenProps) => {
   }, []);
 
   return loading ? (
-    <div>loading</div>
+    <div className="flex items-center justify-center">loading</div>
   ) : (
-    <section className="relative p-6 space-y- rounded-lg shadow-md">
-      <div>
-        <p className="text-3xl font-semibold text-gray-900 text-center">
-          Hello {user.name} 👋
+    <section className="bg-gray-500 p-10 ">
+      <div className="bg-gray-200  border-gray-800  border-2 text-gray-600  p-5 rounded-2xl flex flex-col gap-5 items-center text-center max-w-7xl mx-auto">
+        <p className="text-4xl font-semibold text-center pb-5">
+          Hey {user.name} !
         </p>
-        <p>{user.quote}</p>
-        <p></p>
+        <p className=" font-light text-2xl">"{user.quote}"</p>
       </div>
-      <h1 className="text-2xl font-semibold text-gray-900 text-center">
-        Mes Activité
-      </h1>
-      <div
-        onClick={() => setCreate(true)}
-        className="bg-indigo-500 text-white font-semibold py-2 px-6 rounded-lg inline-block cursor-pointer hover:bg-indigo-600 focus:outline-none  transition duration-300"
-      >
-        New project
-      </div>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-      <form
-        className={`${!create ? "hidden" : ""} space-y-4`}
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          name="project"
-          placeholder="New Activity"
-          onChange={(event) => setNewActivity(event.target.value)}
-          value={newActivity}
-          className="w-full p-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
-        />
-        <button
-          disabled={isLoading}
-          className="w-full py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-300"
-        >
-          {" "}
-          Add{" "}
-        </button>
-      </form>
-      {edit && <ModalEdit setEdit={setEdit} idToEdit={idToEdit} />}
 
-      <ul className="space-y-4">
-        {activities?.map((activity) => (
-          <Activity
-            setEdit={setEdit}
-            activity={activity}
-            handleDelete={handleDelete}
-            key={activity._id}
-            setIdToEdit={setIdToEdit}
-          /> //comp wt start end delete actual time?
-        ))}
-      </ul>
+      <div className="mt-10 mb-10   border-gray-800 border-dashed border-3 flex  text-gray-600  flex-col gap-6 max-w-7xl mx-auto bg-gray-200 rounded-2xl p-10">
+        <h1 className="text-4xl pb-5 font-semibold  text-center">Activities</h1>
+
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+
+        {edit && <ModalEdit setEdit={setEdit} idToEdit={idToEdit} />}
+
+        <ul className="space-y-4">
+          {activities?.map((activity) => (
+            <Activity
+              setEdit={setEdit}
+              activity={activity}
+              handleDelete={handleDelete}
+              key={activity._id}
+              setIdToEdit={setIdToEdit}
+            />
+          ))}
+        </ul>
+        <button
+          onClick={() => setCreate(true)}
+          disabled={create}
+          className="disabled:bg-gray-400 w-fit mx-auto flex items-center gap-2 bg-gray-800 text-white font-semibold p-4 rounded-lg cursor-pointer hover:bg-gray-600 focus:outline-none  transition duration-300"
+        >
+          <MdAddCircleOutline size={30} /> New activity
+        </button>
+        <form
+          className={`${!create ? "hidden" : ""} space-y-4 w-1/2 mx-auto`}
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="text"
+            name="project"
+            placeholder="New Activity"
+            onChange={(event) => setNewActivity(event.target.value)}
+            value={newActivity}
+            className="w-full p-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none "
+          />
+          <button
+            disabled={isLoading}
+            className="w-full py-3 bg-gray-800 text-white rounded-lg hover:cursor-pointer  hover:bg-gray-600 "
+          >
+            Add
+          </button>
+        </form>
+      </div>
     </section>
   );
 };

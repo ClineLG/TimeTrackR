@@ -4,6 +4,8 @@ import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import weekOfYear from "../utils/weekOfYear";
 import { ActivityProps } from "../ActivitiesProps";
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 
 const Weekly = (props: ActivityProps) => {
   const { setData, setError, setLoading } = props;
@@ -30,6 +32,9 @@ const Weekly = (props: ActivityProps) => {
             return { x: activity.name, y: activity.time };
           }
         );
+        if (WeeklyData.length < 1) {
+          setError("Pas de données disponnibles");
+        }
         setData(WeeklyData);
         // console.log(response.data);
         setLoading(false);
@@ -47,41 +52,39 @@ const Weekly = (props: ActivityProps) => {
     };
     fetchData();
   }, [year, week]);
-  const weekArr = Array.from({ length: 52 }, (_, i) => i + 1);
+  // const weekArr = Array.from({ length: 52 }, (_, i) => i + 1);
   return (
-    <div>
+    <div className=" bg-indigo-600 p-5 rounded-2xl">
       <div className="flex items-center justify-center mb-4">
         <button
           onClick={() => setYear(Number(year) - 1)}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-l-md"
+          className="px-4 py-2 w-28 bg-white text-indigo-600 rounded-2xl font-bold"
         >
-          &#60; Précédent
+          Précédent
         </button>
-        <h1 className="mx-4 text-xl font-semibold">{year}</h1>
+        <h1 className="mx-4 text-xl font-semibold text-white">Année {year}</h1>
         <button
           onClick={() => setYear(Number(year) + 1)}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-r-md"
+          className="px-4 py-2 w-28 bg-white text-indigo-600 rounded-2xl font-bold"
         >
-          Suivant &#62;
+          Suivant
         </button>
       </div>
 
-      <h2 className="text-center mb-4">
-        Sélectionnez une semaine de l'année {year}
-      </h2>
       <div>
-        <div className="w-48 flex gap-1.5 ap-4  overflow-scroll">
-          {weekArr.map((Week) => (
-            <div
-              key={Week}
-              className={`p-4 cursor-pointer border-2 rounded-md text-center size-5  flex justify-center items-center ${
-                Week === week ? "bg-indigo-600 text-white" : "bg-white-200"
-              }`}
-              onClick={() => setWeek(Week)}
-            >
-              {Week}
-            </div>
-          ))}
+        <div className="flex justify-center items-center gap-2 text-white">
+          {week !== 1 ? (
+            <FaChevronLeft onClick={() => setWeek(week - 1)} />
+          ) : (
+            <div></div>
+          )}
+
+          <p>Semaine {week}</p>
+          {week !== 52 ? (
+            <FaChevronRight onClick={() => setWeek(week + 1)} />
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </div>

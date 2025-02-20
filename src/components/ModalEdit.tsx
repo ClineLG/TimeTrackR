@@ -41,56 +41,63 @@ const ModalEdit = ({
   };
 
   return (
-    <div className="fixed inset-0  bg-opacity-30 flex justify-center items-center z-50">
-      <div className="bg-white  p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold mb-4">Ajouter du Temps</h2>
+    <div className="fixed inset-0 bg-[rgb(255,255,255)]/50 flex justify-center items-center z-2">
+      <div className="bg-gray-800 text-gray-200 p-10 rounded-lg  w-72   flex flex-col gap-5 items-center">
+        <h2 className="text-2xl font-semibold mb-4">Add time</h2>
 
         <div className="flex gap-2.5 justify-center place-items-center">
           <input
             type="number"
-            className="w-15 p-3 mb-4 border border-gray-300 rounded-lg  focus:outline-none"
-            placeholder="heures"
+            id="hour"
+            className="w-16 p-3 mb-4 border border-gray-300 rounded-lg  focus:outline-none"
+            placeholder="00"
             onChange={(event) => {
               const obj = { ...time, hours: event.target.value };
               setTime(obj);
             }}
             value={time.hours}
           />
-          <label className="block text-lg mb-2">H</label>
+          <label htmlFor="hour" className="block text-lg mb-2">
+            H
+          </label>
           <input
+            id="min"
             type="number"
             onChange={(event) => {
               const obj = { ...time, minutes: event.target.value };
               setTime(obj);
             }}
             value={time.minutes}
-            className="w-15 p-3 mb-4 border border-gray-300 rounded-lg text-lg focus:outline-none"
-            placeholder="minutes"
+            className="w-16 p-3 mb-4 border  border-gray-300 rounded-lg text-lg focus:outline-none"
+            placeholder="00"
           />
-          <label className="block text-lg mb-2">minutes</label>
+          <label htmlFor="min" className="block text-lg mb-2">
+            min
+          </label>
         </div>
-        <label className="block text-lg mb-2">Date :</label>
+        <div className="w-full  text-gray-800 rounded-2xl">
+          <Calendar
+            onChange={(event) => {
+              if (Array.isArray(event)) {
+                setDate(event[0]);
+              } else {
+                setDate(event);
+              }
+            }}
+            value={date} // La date affichée dans le calendrier
+            className="rounded-lg react-calendar text-xs"
+          />
+        </div>
 
-        <Calendar
-          onChange={(event) => {
-            if (Array.isArray(event)) {
-              setDate(event[0]);
-            } else {
-              setDate(event);
-            }
-          }}
-          value={date} // La date affichée dans le calendrier
-          className="shadow-lg rounded-lg border border-gray-300 place-items-center"
-        />
-        <div className="flex justify-between">
+        <div className=" flex mt-5  w-full  my-2 justify-between h-10">
           <button
-            className="px-6 py-2 bg-gray-300 rounded-lg text-lg font-medium text-gray-700 hover:bg-gray-400 transition"
+            className="px-3 py-3 bg-gray-200  box-border rounded-2xl text-xs font-medium text-gray-800 hover:border-gray-200 hover:border hover:cursor-pointer hover:bg-gray-800 hover:text-gray-200 transition"
             onClick={() => setEdit(false)}
           >
             Annuler
           </button>
           <button
-            className="px-6 py-2 bg-green-600 rounded-lg text-lg font-medium text-white hover:bg-green-700 transition"
+            className="px-3 py-3 bg-green-800 rounded-2xl text-xs font-medium text-white hover:cursor-pointer hover:bg-green-600 transition"
             onClick={handleSubmit}
           >
             Ajouter

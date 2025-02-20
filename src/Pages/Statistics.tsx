@@ -3,7 +3,6 @@ import {
   VictoryChart,
   VictoryBar,
   VictoryTheme,
-  VictoryLabel,
   VictoryPie,
   VictoryAxis,
   VictoryTooltip,
@@ -15,7 +14,6 @@ import Weekly from "../components/Weekly";
 import Year from "../components/year";
 import Daily from "../components/Daily";
 import { ButtonStatistics } from "../components/ButtonStattistics";
-import { data } from "react-router-dom";
 
 //comparer visuellement
 
@@ -119,50 +117,110 @@ const Statistics = () => {
           ) : error ? (
             <p className="text-center text-red-500">{error}</p>
           ) : pie ? (
-            <VictoryPie
-              data={Data}
-              theme={VictoryTheme.clean}
-              // padAngle={5}
-              radius={({ datum }) => datum.y * 0.08 + 20}
-              labelIndicator
-              labelIndicatorInnerOffset={15}
-              labels={({ datum }) => `${datum.x}\n${totalHours(datum.y)}`}
-
-              // Affiche l'étiquette avec la valeur
-              // style={{
-              //   labels: { fill: "white", fontSize: 4, fontWeight: "bold" }, // Style des labels
-              // }}
-              // theme={VictoryTheme.material}
-              // labelPlacement="perpendicular" // Ajuste l'orientation des labels
-            />
+            <div className="flex justify-center">
+              <div className="w-full max-w-[900px]">
+                <VictoryPie
+                  data={Data}
+                  theme={VictoryTheme.clean}
+                  padAngle={5}
+                  labelIndicator
+                  labelIndicatorInnerOffset={50}
+                  labelIndicatorOuterOffset={5}
+                  labelRadius={220}
+                  radius={150}
+                  labelPlacement="vertical"
+                  width={600}
+                  height={600}
+                  labels={({ datum }) =>
+                    `${datum.x} : \n${totalHours(datum.y)}`
+                  }
+                  style={{
+                    labels: {
+                      fill: "black",
+                      fontSize: 8,
+                      fontWeight: 200,
+                    },
+                    data: {
+                      fill: ({ datum }) =>
+                        datum.y > 180
+                          ? "#4F3AF6"
+                          : datum.y > 60 && datum.y < 180
+                          ? "#3ac3f4"
+                          : "#3af46f",
+                    },
+                  }}
+                />
+              </div>
+            </div>
           ) : (
             <div className="w-full flex justify-center">
-              <div className="w-4/5 overflow-x-auto mx-auto bg-amber-400 flex justify-center">
-                <div style={{ width: Data.length * 60 }}>
+              <div className="w-full  overflow-x-auto rounded-2xl ">
+                <div
+                  style={{
+                    width: Data
+                      ? Data.length <= 3
+                        ? Data.length * 300
+                        : Data.length * 150
+                      : "auto",
+                  }}
+                  className="bg-indigo-600  mx-auto rounded-2xl"
+                >
                   <VictoryChart
-                    domainPadding={{ x: 1 }}
-                    theme={VictoryTheme.clean}
-                    width={Data.length * 60}
+                    theme={VictoryTheme.material}
+                    padding={{ left: 100, right: 50, top: 50, bottom: 50 }}
+                    domainPadding={{ x: 0, y: 0 }}
+                    width={
+                      Data
+                        ? Data.length <= 3
+                          ? Data.length * 300
+                          : Data.length * 150
+                        : 0
+                    }
                     height={500}
                   >
                     <VictoryBar
                       barWidth={40}
+                      height={500}
+                      cornerRadius={{ top: 20 }}
                       data={Data}
                       labelComponent={<VictoryTooltip />}
                       labels={({ datum }) => totalHours(datum.y)}
                       // labels={({ datum }) => }
                       // labelComponent={<VictoryLabel dy={-30} />}
+                      style={{ data: { fill: "white" } }}
+                      alignment="middle"
+                    />
+
+                    <VictoryAxis
+                      dependentAxis
+                      tickFormat={(tick) => `${totalHours(tick)}`}
                       style={{
-                        data: {
-                          fill: "#165DFB",
-                          fillOpacity: 0.4,
+                        axis: { stroke: "white" },
+                        ticks: { stroke: "transparent" },
+                        tickLabels: {
+                          fill: "white",
+                          fontSize: 11,
                         },
-                        labels: {
-                          fill: "#165DFB",
-                        },
+                        grid: { stroke: "#d8d8d8" },
                       }}
                     />
-                    <VictoryAxis />
+
+                    <VictoryAxis
+                      tickFormat={(tick, i) =>
+                        `${tick}\n ${totalHours(Data[i].y)}`
+                      }
+                      style={{
+                        axis: { stroke: "white" },
+                        ticks: { stroke: "transparent" },
+                        tickLabels: {
+                          fill: "white",
+                          fontSize: 12,
+                        },
+                        grid: { stroke: "#d8d8d8" },
+                      }}
+                      domain={[0, Data.length + 1]}
+                      tickValues={Data.map((datum, index) => index + 1)}
+                    />
                   </VictoryChart>
                 </div>
               </div>

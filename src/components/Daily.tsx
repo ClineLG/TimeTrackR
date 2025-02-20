@@ -30,7 +30,12 @@ const Daily = (props: ActivityProps) => {
           }
         );
         setData(daylyData);
-        // console.log(response.data);
+        if (daylyData.length < 1) {
+          setError("Pas de données disponnibles");
+        }
+        console.log("ResponseDaily", response.data);
+        console.log("ResponseData", daylyData);
+
         setLoading(false);
       } catch (error) {
         console.log(error);
