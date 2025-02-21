@@ -131,7 +131,7 @@ export const Activity = React.memo(function Activity(props: {
 
         <button
           onClick={handleEdit}
-          className="text-gray-00 hover:cursor-pointer hover:text-indigo-800 focus:outline-none flex items-center gap-1.5"
+          className="text-gray-00 hover:cursor-pointer hover:text-yellow-400 focus:outline-none flex items-center gap-1.5"
         >
           <MdEdit />
         </button>

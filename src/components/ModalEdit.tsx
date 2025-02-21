@@ -17,26 +17,38 @@ const ModalEdit = ({
 }) => {
   const [date, setDate] = useState<Date | null>(null);
   const [time, setTime] = useState({ hours: "", minutes: "" });
+  const [error, setError] = useState("");
   const { checkUser } = useContext(UserContext);
 
-  const handleSubmit = async () => {
-    try {
-      const totalTime = Number(time.hours) * 60 + Number(time.minutes);
-      console.log("Total", totalTime);
-      const response = await axios.post(
-        "http://localhost:3000/activity/addTime",
+  console.log(date);
 
-        { id: idToEdit.id, date: date, time: totalTime, name: idToEdit.name },
-        {
-          headers: {
-            Authorization: "Bearer " + checkUser(),
-          },
+  const handleSubmit = async () => {
+    setError("");
+    if (!date) {
+      setError("Please select a day");
+    } else {
+      try {
+        const totalTime = Number(time.hours) * 60 + Number(time.minutes);
+        console.log("Total", totalTime);
+        const response = await axios.post(
+          "http://localhost:3000/activity/addTime",
+
+          { id: idToEdit.id, date: date, time: totalTime, name: idToEdit.name },
+          {
+            headers: {
+              Authorization: "Bearer " + checkUser(),
+            },
+          }
+        );
+        if (response) {
+          setEdit(false);
         }
-      );
-      console.log(response);
-      setEdit(false);
-    } catch (error) {
-      console.log(error);
+      } catch (error) {
+        if (error) {
+          setError("An error occurred");
+        }
+        console.log(error);
+      }
     }
   };
 
@@ -88,7 +100,7 @@ const ModalEdit = ({
             className="rounded-lg react-calendar text-xs"
           />
         </div>
-
+        {error && <p className="text-red-600">{error} </p>}
         <div className=" flex mt-5  w-full  my-2 justify-between h-10">
           <button
             className="px-3 py-3 bg-gray-200  box-border rounded-2xl text-xs font-medium text-gray-800 hover:border-gray-200 hover:border hover:cursor-pointer hover:bg-gray-800 hover:text-gray-200 transition"

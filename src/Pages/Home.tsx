@@ -60,7 +60,7 @@ const Home = ({ checkUser }: TokenProps) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     if (!newActivity) {
-      setError("You need to write something");
+      setError("You have to write something");
     } else {
       try {
         setIsLoading(true);
@@ -115,15 +115,15 @@ const Home = ({ checkUser }: TokenProps) => {
   return loading ? (
     <div className="flex items-center justify-center">loading</div>
   ) : (
-    <section className="bg-gray-500 p-10 ">
-      <div className="bg-gray-200  border-gray-800  border-2 text-gray-600  p-5 rounded-2xl flex flex-col gap-5 items-center text-center max-w-7xl mx-auto">
+    <section className="bg-gray-500 p-10 min-h-screen ">
+      <div className="bg-gray-200  text-gray-800  p-5 rounded-2xl flex flex-col gap-5 items-center text-center max-w-7xl mx-auto">
         <p className="text-4xl font-semibold text-center pb-5">
           Hey {user.name} !
         </p>
         <p className=" font-light text-2xl">"{user.quote}"</p>
       </div>
 
-      <div className="mt-10 mb-10   border-gray-800 border-dashed border-3 flex  text-gray-600  flex-col gap-6 max-w-7xl mx-auto bg-gray-200 rounded-2xl p-10">
+      <div className="mt-10 mb-10   flex  text-gray-800  flex-col gap-6 max-w-7xl mx-auto bg-gray-200 rounded-2xl p-10">
         <h1 className="text-4xl pb-5 font-semibold  text-center">Activities</h1>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}

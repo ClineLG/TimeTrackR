@@ -1,58 +1,76 @@
 import { Link } from "react-router-dom";
+import welcome from "../assets/welcome.png";
+import { TokenProps } from "../UserTypes";
+import home from "../assets/homePage.png";
+import pie from "../assets/pie.png";
+import bar from "../assets/bar.png";
 
-const Welcome = () => {
+const Welcome = ({ checkUser }: TokenProps) => {
   return (
     <>
-      <section className="flex items-center justify-center bg-blue-500 h-[100vh] text-white text-center px-4">
-        <div>
+      <section className="flex items-center justify-center  text-white text-center ">
+        <img
+          src={welcome}
+          alt="image"
+          className="object-cover h-[100vh] w-full opacity-90  "
+        />
+        <div className="absolute text-gray-200  bg-[rgb(0,0,0)]/50 w-full py-20 ">
           <h1 className="text-5xl font-bold leading-tight mb-6">
-            Suivez votre activité, améliorez votre productivité.
+            Track your activity, improve your productivity.{" "}
           </h1>
-          <p className="text-lg mb-6">
-            Avec Activity Tracker, suivez facilement vos heures de travail,
-            analysez vos progrès et optimisez votre temps.
+          <p className="text-lg  mb-6">
+            With ActivityTrackR, easily track your working hours, analyze your
+            progress, and optimize your time.
           </p>
           <Link
-            to="/signup"
-            className="px-6 py-3 bg-yellow-500 text-black rounded-lg text-xl hover:bg-yellow-600 transition duration-300"
+            to={checkUser() ? "/home" : "/signup"}
+            className="px-6 py-3 bg-amber-600 shadow-2xl shadow-amber-600 text-black rounded-lg text-xl hover:bg-amber-500 transition duration-300"
           >
-            Essayer maintenant
+            {checkUser() ? "My Activities" : "Try now !"}
           </Link>
         </div>
       </section>
 
       <section className="py-16 bg-white" id="features">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-semibold mb-8">
-            Fonctionnalités principales
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-            <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-semibold">Suivi des heures</h3>
-              <p className="mt-4">
-                Enregistrez facilement le temps que vous consacrez à chaque
-                tâche.
+          <h2 className="text-4xl font-semibold mb-8">Main Features</h2>
+          <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-2 gap-12">
+            <div className="bg-gray-100 p-6 rounded-lg shadow-lg flex flex-col gap-4">
+              <h3 className="text-2xl font-semibold">Time Tracking</h3>
+              <p>
+                Easily log the time you dedicate to each task with a simple and
+                intuitive interface. Track your work hours, breaks, and personal
+                projects effortlessly.
               </p>
+              <img
+                src={home}
+                alt="home page picture"
+                className="object-cover rounded-2xl "
+              />
             </div>
 
-            <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-semibold">Rapports détaillés</h3>
-              <p className="mt-4">
-                Obtenez des rapports visuels sur la façon dont vous passez votre
-                temps.
+            <div className="bg-gray-100 p-6 rounded-lg shadow-lg flex flex-col gap-4">
+              <h3 className="text-2xl font-semibold">Detailed Reports</h3>
+              <p>
+                Access comprehensive visual reports that show you exactly how
+                you spend your time. Identify patterns, areas for improvement,
+                and measure your productivity over time.{" "}
               </p>
+              {/* <img src={pie} alt="" /> */}
+              <img src={bar} className="object-cover rounded-2xl" alt="" />
             </div>
 
-            <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
+            {/* <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
               <h3 className="text-2xl font-semibold">
-                Optimisation de la productivité
+                Productivity Optimization
               </h3>
               <p className="mt-4">
-                Recevez des notifications pour rester motivé et ne pas oublier
-                de suivre vos activités./Gagnez des badges et des récompenses
-                pour chaque objectif atteint !
+                {" "}
+                Never forget to track your progress. Earn badges and rewards for
+                completing tasks and achieving goals, and celebrate your
+                productivity milestones.
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
