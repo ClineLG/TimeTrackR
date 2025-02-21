@@ -2,7 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { ActivityProps } from "../ActivitiesProps";
-
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 const Year = (props: ActivityProps) => {
   const { setData, setError, setLoading } = props;
   const [year, setYear] = useState<number>(new Date().getFullYear());
@@ -21,14 +22,15 @@ const Year = (props: ActivityProps) => {
             },
           }
         );
-        const YearData = [...response.data].map(
-          (activity: { id: string; name: string; time: number }) => {
+        const YearData = [...response.data]
+          .map((activity: { id: string; name: string; time: number }) => {
             return { x: activity.name, y: activity.time };
-          }
-        );
+          })
+          .filter((activity) => activity.y !== 0)
+          .sort((a, b) => b.y - a.y);
         setData(YearData);
         if (YearData.length < 1) {
-          setError("Pas de données disponnibles");
+          setError("No data available");
         }
         console.log(response.data);
         setLoading(false);
@@ -38,9 +40,9 @@ const Year = (props: ActivityProps) => {
           axios.isAxiosError(error) &&
           error.response?.data.message === "no data"
         ) {
-          setError("Données indisponibles");
+          setError("No data available");
         } else {
-          setError("Une erreur est survenue");
+          setError("An error occurred");
         }
         setLoading(false);
       }
@@ -49,22 +51,20 @@ const Year = (props: ActivityProps) => {
   }, [year]);
   //   const weekArr = Array.from({ length: 52 }, (_, i) => i + 1);
   return (
-    <div>
-      <div className="flex items-center justify-center mb-4  bg-indigo-600 p-4 rounded-2xl">
-        <button
-          onClick={() => setYear(year - 1)}
-          className="px-4 py-2 bg-white w-40 text-indigo-600 font-bold rounded-2xl"
-        >
-          Précédent
-        </button>
-        <h1 className="mx-4 text-white text-xl font-semibold"> {year}</h1>
-        <button
-          onClick={() => setYear(year + 1)}
-          className="px-4 py-2 bg-white w-40 text-indigo-600 font-bold rounded-2xl"
-        >
-          Suivant
-        </button>
-      </div>
+    <div className="flex items-center justify-center  p-4 rounded-2xl">
+      <button
+        className="bg-gray-200 p-4 rounded-2xl text-xl  hover:bg-gray-50"
+        onClick={() => setYear(year - 1)}
+      >
+        <FaChevronLeft />
+      </button>
+      <h1 className="mx-4 text-white text-2xl font-semibold"> {year}</h1>
+      <button
+        className="bg-gray-200 p-4 rounded-2xl text-xl hover:bg-gray-50"
+        onClick={() => setYear(year + 1)}
+      >
+        <FaChevronRight />
+      </button>
     </div>
   );
 };

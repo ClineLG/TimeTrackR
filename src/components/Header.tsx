@@ -8,13 +8,13 @@ const Header = ({ checkUser }: { checkUser: () => string | undefined }) => {
   const location = useLocation();
 
   return checkUser() ? (
-    <nav className="bg-gray-800 text-gray-200 p-4 shadow-md sticky top-0 border-b-2">
+    <nav className="bg-gray-800 text-gray-200 p-4 shadow-md sticky top-0 border-b-2 z-10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link
           to="/"
           className="flex items-center m-2.5 gap-1.5 text-2xl font-semibold hover:text-indigo-200"
         >
-          TimeTracR <IoIosRocket />
+          TimeTrackR <IoIosRocket />
         </Link>
         <div className="h-8 flex-auto flex gap-6 justify-end">
           <Link
@@ -49,7 +49,7 @@ const Header = ({ checkUser }: { checkUser: () => string | undefined }) => {
           to="/"
           className="flex items-center m-2.5 gap-1.5 text-2xl font-semibold hover:text-indigo-200"
         >
-          TimeTracR <IoIosRocket />{" "}
+          TimeTrackR <IoIosRocket />{" "}
         </Link>
       </div>
     )

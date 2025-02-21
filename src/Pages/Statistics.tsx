@@ -6,6 +6,8 @@ import {
   VictoryPie,
   VictoryAxis,
   VictoryTooltip,
+  LineSegment,
+  VictoryLabel,
 } from "victory";
 
 import totalHours from "../utils/totalInHours";
@@ -14,8 +16,6 @@ import Weekly from "../components/Weekly";
 import Year from "../components/year";
 import Daily from "../components/Daily";
 import { ButtonStatistics } from "../components/ButtonStattistics";
-
-//comparer visuellement
 
 const Statistics = () => {
   const [Data, setData] = useState<
@@ -68,166 +68,193 @@ const Statistics = () => {
   };
 
   return (
-    <section className="p-6 bg-white shadow-lg rounded-lg">
-      <h1 className="text-2xl font-semibold text-center mb-4 text-indigo-600">
-        Mes Statistiques
-      </h1>
-      <div className="flex justify-center mb-4">
-        <ButtonStatistics
-          setSelectedTime={setSelectedTime}
-          title="Par Année"
-          time="year"
-        />
-        <ButtonStatistics
-          setSelectedTime={setSelectedTime}
-          title="Par Mois"
-          time="monthly"
-        />
-        <ButtonStatistics
-          setSelectedTime={setSelectedTime}
-          title="Par Semaine"
-          time="weekly"
-        />
-        <ButtonStatistics
-          setSelectedTime={setSelectedTime}
-          title="Par Jour"
-          time="daily"
-        />
+    <section className="bg-gray-500 p-10 min-h-screen flex flex-col gap-6">
+      <div className="bg-gray-200 w-full text-gray-800  p-5 rounded-2xl flex flex-col gap-5 items-center text-center max-w-7xl mx-auto">
+        <h1 className="text-4xl font-semibold text-center pb-5">
+          My Statistics
+        </h1>
+        <div className="flex justify-center gap-6 mb-4">
+          <ButtonStatistics
+            selectedTime={selectedTime}
+            setSelectedTime={setSelectedTime}
+            title="Year"
+            time="year"
+          />
+          <ButtonStatistics
+            selectedTime={selectedTime}
+            setSelectedTime={setSelectedTime}
+            title="Month"
+            time="monthly"
+          />
+          <ButtonStatistics
+            selectedTime={selectedTime}
+            setSelectedTime={setSelectedTime}
+            title="Week"
+            time="weekly"
+          />
+          <ButtonStatistics
+            selectedTime={selectedTime}
+            setSelectedTime={setSelectedTime}
+            title="Day"
+            time="daily"
+          />
+        </div>
       </div>
 
-      <div className="mb-4 flex flex-col justify-center w-full">
+      <div className="bg-gray-800  text-gray-800  p-5 rounded-2xl flex flex-col gap-5 items-center text-center max-w-7xl mx-auto">
         {ComponentSelected()}
-        <div className="flex justify-center m-5">
-          <button
-            onClick={() => setPie(true)}
-            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mx-2"
-          >
-            pie
-          </button>
-          <button
-            onClick={() => setPie(false)}
-            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 mx-2"
-          >
-            bar
-          </button>
+      </div>
+      <div className="mx-auto flex w-fit rounded-2xl overflow-hidden">
+        <button
+          onClick={() => setPie(true)}
+          className={` ${
+            pie ? "text-gray-200  bg-gray-800" : "text-gray-800  bg-gray-400"
+          } py-3 rounded-bl-2xl rounded-tl-2xl border-3 w-15`}
+        >
+          Pie
+        </button>
+        <button
+          onClick={() => setPie(false)}
+          className={` ${
+            !pie ? "text-gray-200  bg-gray-800" : "text-gray-800  bg-gray-400"
+          } py-3 rounded-br-2xl rounded-tr-2xl border-3 w-15`}
+        >
+          Bar
+        </button>
+      </div>
+      {loading ? (
+        <div className="w-screen flex items-center justify-center">
+          <p className="text-center text-gray-800 rounded-2xl bg-gray-200 w-fit text-2xl p-4 mx-auto">
+            loading
+          </p>
         </div>
-        <div className="">
-          {loading ? (
-            <div className="text-center text-xl">loading</div>
-          ) : error ? (
-            <p className="text-center text-red-500">{error}</p>
-          ) : pie ? (
-            <div className="flex justify-center">
-              <div className="w-full max-w-[900px]">
-                <VictoryPie
-                  data={Data}
-                  theme={VictoryTheme.clean}
-                  padAngle={5}
-                  labelIndicator
-                  labelIndicatorInnerOffset={50}
-                  labelIndicatorOuterOffset={5}
-                  labelRadius={220}
-                  radius={150}
-                  labelPlacement="vertical"
-                  width={600}
-                  height={600}
-                  labels={({ datum }) =>
-                    `${datum.x} : \n${totalHours(datum.y)}`
-                  }
+      ) : error ? (
+        <p className="text-center text-gray-800 rounded-2xl bg-gray-200 w-fit text-2xl p-4 mx-auto">
+          {error}
+        </p>
+      ) : pie ? (
+        <div className="flex bg-gray-800 rounded-2xl items-center justify-center">
+          <div className="w-full max-w-[900px] ">
+            <VictoryPie
+              data={Data}
+              padAngle={5}
+              labelIndicator={
+                <LineSegment
                   style={{
-                    labels: {
-                      fill: "black",
-                      fontSize: 8,
-                      fontWeight: 200,
-                    },
+                    stroke: "white",
+                    strokeDasharray: 5,
+                  }}
+                />
+              }
+              labelIndicatorInnerOffset={50}
+              labelIndicatorOuterOffset={5}
+              labelRadius={220}
+              radius={150}
+              labelPlacement="vertical"
+              width={600}
+              height={600}
+              labels={({ datum }) => `${datum.x} : \n${totalHours(datum.y)}`}
+              style={{
+                labels: {
+                  fill: "white",
+                  fontSize: 12,
+                  fontWeight: 500,
+                },
+                data: {
+                  fill: ({ datum }) =>
+                    datum.y > 180
+                      ? "#4F3AF6"
+                      : datum.y > 60 && datum.y < 180
+                      ? "#3ac3f4"
+                      : "#3af46f",
+                },
+              }}
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="w-full flex justify-center">
+          <div className="w-full  overflow-x-auto rounded-2xl ">
+            <div
+              style={{
+                width: Data
+                  ? Data.length <= 3
+                    ? Data.length * 300
+                    : Data.length * 150
+                  : "auto",
+              }}
+              className="bg-gray-800  mx-auto rounded-2xl"
+            >
+              <VictoryChart
+                theme={VictoryTheme.material}
+                padding={{ left: 100, right: 50, top: 50, bottom: 100 }}
+                domainPadding={{ x: 0, y: 0 }}
+                width={
+                  Data
+                    ? Data.length <= 3
+                      ? Data.length * 300
+                      : Data.length * 150
+                    : 0
+                }
+                height={500}
+              >
+                <VictoryBar
+                  barWidth={40}
+                  height={500}
+                  cornerRadius={{ top: 20 }}
+                  data={Data}
+                  labelComponent={<VictoryTooltip />}
+                  // labels={({ datum }) => }
+                  // labelComponent={<VictoryLabel dy={-30} />}
+                  style={{
                     data: {
                       fill: ({ datum }) =>
-                        datum.y > 180
+                        datum.y >= 180
                           ? "#4F3AF6"
                           : datum.y > 60 && datum.y < 180
                           ? "#3ac3f4"
                           : "#3af46f",
                     },
                   }}
+                  alignment="middle"
                 />
-              </div>
-            </div>
-          ) : (
-            <div className="w-full flex justify-center">
-              <div className="w-full  overflow-x-auto rounded-2xl ">
-                <div
+
+                <VictoryAxis
+                  dependentAxis
+                  tickFormat={(tick) => `${totalHours(tick)}`}
                   style={{
-                    width: Data
-                      ? Data.length <= 3
-                        ? Data.length * 300
-                        : Data.length * 150
-                      : "auto",
+                    axis: { stroke: "white" },
+                    ticks: { stroke: "transparent" },
+                    tickLabels: {
+                      fill: " #3ac3f4",
+                      fontSize: 11,
+                    },
+                    grid: { stroke: "#d8d8d8" },
                   }}
-                  className="bg-indigo-600  mx-auto rounded-2xl"
-                >
-                  <VictoryChart
-                    theme={VictoryTheme.material}
-                    padding={{ left: 100, right: 50, top: 50, bottom: 50 }}
-                    domainPadding={{ x: 0, y: 0 }}
-                    width={
-                      Data
-                        ? Data.length <= 3
-                          ? Data.length * 300
-                          : Data.length * 150
-                        : 0
-                    }
-                    height={500}
-                  >
-                    <VictoryBar
-                      barWidth={40}
-                      height={500}
-                      cornerRadius={{ top: 20 }}
-                      data={Data}
-                      labelComponent={<VictoryTooltip />}
-                      labels={({ datum }) => totalHours(datum.y)}
-                      // labels={({ datum }) => }
-                      // labelComponent={<VictoryLabel dy={-30} />}
-                      style={{ data: { fill: "white" } }}
-                      alignment="middle"
-                    />
+                />
 
-                    <VictoryAxis
-                      dependentAxis
-                      tickFormat={(tick) => `${totalHours(tick)}`}
-                      style={{
-                        axis: { stroke: "white" },
-                        ticks: { stroke: "transparent" },
-                        tickLabels: {
-                          fill: "white",
-                          fontSize: 11,
-                        },
-                        grid: { stroke: "#d8d8d8" },
-                      }}
-                    />
+                <VictoryAxis
+                  tickFormat={(tick, i) => `${tick}\n ${totalHours(Data[i].y)}`}
+                  style={{
+                    axis: { stroke: "white" },
+                    ticks: { stroke: "white" },
 
-                    <VictoryAxis
-                      tickFormat={(tick, i) =>
-                        `${tick}\n ${totalHours(Data[i].y)}`
-                      }
-                      style={{
-                        axis: { stroke: "white" },
-                        ticks: { stroke: "transparent" },
-                        tickLabels: {
-                          fill: "white",
-                          fontSize: 12,
-                        },
-                        grid: { stroke: "#d8d8d8" },
-                      }}
-                      domain={[0, Data.length + 1]}
-                      tickValues={Data.map((datum, index) => index + 1)}
-                    />
-                  </VictoryChart>
-                </div>
-              </div>
+                    tickLabels: {
+                      fill: "#3af46f",
+                      fontSize: 12,
+                      angle: 15,
+                      padding: 15,
+                    },
+                    grid: { stroke: "#d8d8d8" },
+                  }}
+                  domain={[0, Data.length + 1]}
+                  tickValues={Data.map((datum, index) => index + 1)}
+                />
+              </VictoryChart>
             </div>
-          )}
-        </div>{" "}
-      </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

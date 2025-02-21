@@ -19,9 +19,9 @@ const ResetPassword = ({ login }: AuthProps) => {
     event.preventDefault();
 
     if (!password || !confirmPassword) {
-      setError("Veuillez remplir tous les champs");
+      setError("Please fill in all fields.");
     } else if (password !== confirmPassword) {
-      setError("Les mots de passe ne sont pas identiques");
+      setError("The passwords do not match.");
     } else {
       try {
         setLoading(true);
@@ -40,43 +40,50 @@ const ResetPassword = ({ login }: AuthProps) => {
       } catch (error) {
         console.log(error);
         setLoading(false);
+        if (error) {
+          setError("An error occurred.");
+        }
       }
     }
   };
 
   return (
-    <section className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className=" text-center text-2xl font-semibold text-gray-800 mb-6">
-        Réinitialisation du mot de passe
-      </h1>
+    <section className="bg-gray-500 p-10 min-h-screen">
+      <div className="mt-20 max-w-2xl mx-auto p-6 bg-gray-200  text-gray-600  rounded-2xl">
+        <h1 className="text-4xl font-semibold text-center  text-gray-800 pb-5">
+          Password Reset
+        </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          setError={setError}
-          placeholder="Mot de Passe"
-          name="password"
-          password
-          setState={setPassword}
-          state={password}
-        />
-        <Input
-          setError={setError}
-          placeholder="Confirmation du Mot de Passe"
-          password
-          name="password"
-          setState={setConfirmPassword}
-          state={confirmPassword}
-        />
-        <div className="flex-col flex justify-center">
-          {error && <p className="bg-red-500">{error}</p>}
-          <button
-            className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-md  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            disabled={loading ? true : false}
-          >
-            Enregistrer
-          </button>
-        </div>
-      </form>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-7">
+          <Input
+            label="Password"
+            setError={setError}
+            placeholder="*****"
+            name="password"
+            password
+            setState={setPassword}
+            state={password}
+          />
+          <Input
+            setError={setError}
+            label="Confirm Password"
+            placeholder="*****"
+            password
+            name="password"
+            setState={setConfirmPassword}
+            state={confirmPassword}
+          />
+          <div className="flex-col flex justify-center">
+            {error && <p className="bg-red-500">{error}</p>}
+            <button
+              className="p-3 my-2 w-fit mx-auto px-10  bg-gray-800 text-white rounded-md  hover:bg-gray-500 "
+              disabled={loading ? true : false}
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };

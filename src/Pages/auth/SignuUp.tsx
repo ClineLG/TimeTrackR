@@ -19,15 +19,15 @@ const Signup = ({ login }: AuthProps) => {
     event.preventDefault();
 
     if (!password || !confirmPassword || !username || !email) {
-      setError("Veuillez remplir tous les champs");
+      setError("Please fill in all fields");
     } else if (password !== confirmPassword) {
-      setError("Les mots de passe ne sont pas identiques");
+      setError("The passwords do not match");
     } else if (
       !email.match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       )
     ) {
-      setError("Veuillez entrer une adresse email valide");
+      setError("Please enter a valid email address");
     } else {
       try {
         setLoading(true);
@@ -43,59 +43,78 @@ const Signup = ({ login }: AuthProps) => {
         setLoading(false);
       } catch (error) {
         console.log(error);
+        if (
+          axios.isAxiosError(error) &&
+          error.response?.data.message === "email allready used"
+        ) {
+          setError("E-mail address already in use");
+        } else {
+          setError("An error occurred");
+        }
         setLoading(false);
       }
     }
   };
 
   return (
-    <section className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className=" text-center text-2xl font-semibold text-gray-800 mb-6">
-        Inscription
-      </h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          setError={setError}
-          placeholder="Email"
-          name="email"
-          setState={setEmail}
-          state={email}
-        />
-        <Input
-          setError={setError}
-          placeholder="Pseudo"
-          name="username"
-          setState={setUsername}
-          state={username}
-        />
-        <Input
-          setError={setError}
-          placeholder="Mot de Passe"
-          password
-          name="password"
-          setState={setPassword}
-          state={password}
-        />
-        <Input
-          setError={setError}
-          password
-          placeholder="Confirmation du mot de passe"
-          name="confirmPassword"
-          setState={setConfirmPassword}
-          state={confirmPassword}
-        />
-        {error && <p className="bg-red-500">{error}</p>}
+    <section className="bg-gray-500 p-10 min-h-screen">
+      <div className="mt-20 max-w-2xl mx-auto p-6 bg-gray-200  text-gray-600  rounded-2xl">
+        <h1 className="text-4xl font-semibold text-center  text-gray-800 pb-5">
+          Sign up
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-7">
+          <Input
+            label="E-mail address"
+            setError={setError}
+            placeholder="Email"
+            name="email"
+            setState={setEmail}
+            state={email}
+          />
+          <Input
+            label="Username"
+            setError={setError}
+            placeholder="Username"
+            name="username"
+            setState={setUsername}
+            state={username}
+          />
+          <Input
+            label="Password"
+            setError={setError}
+            placeholder="*****"
+            password
+            name="password"
+            setState={setPassword}
+            state={password}
+          />
+          <Input
+            label="Confirm Password"
+            setError={setError}
+            password
+            placeholder="*****"
+            name="confirmPassword"
+            setState={setConfirmPassword}
+            state={confirmPassword}
+          />
+          {error && <p className="text-red-500 mx-auto font-bold">{error}</p>}
 
-        <div className="flex-col flex justify-center">
-          <button disabled={loading ? true : false}>S'enregistrer</button>
-          <Link
-            to="/login"
-            className="text-center mt-5 text-indigo-600 underline"
-          >
-            Déjà inscrit ? Se connecter
-          </Link>
-        </div>
-      </form>
+          <div className="flex-col flex justify-center">
+            <button
+              className="p-3 my-2 w-fit mx-auto px-10  bg-gray-800 text-white rounded-md  hover:bg-gray-500 "
+              disabled={loading}
+            >
+              Submit
+            </button>
+            <Link
+              to="/login"
+              className="text-center mt-5 text-gray-600 underline"
+            >
+              Already registered? Log in
+            </Link>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };

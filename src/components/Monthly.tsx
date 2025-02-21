@@ -1,5 +1,5 @@
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import "../calendar.css";
 import { useEffect, useState, useContext } from "react";
 // import dateFormat from "../utils/dateFormat";
 import axios from "axios";
@@ -29,14 +29,15 @@ const Monthly = (props: ActivityProps) => {
             },
           }
         );
-        const monthlyData = [...response.data].map(
-          (activity: { id: string; name: string; time: number }) => {
+        const monthlyData = [...response.data]
+          .map((activity: { id: string; name: string; time: number }) => {
             return { x: activity.name, y: activity.time };
-          }
-        );
+          })
+          .filter((activity) => activity.y !== 0)
+          .sort((a, b) => b.y - a.y);
         setData(monthlyData);
         if (monthlyData.length < 1) {
-          setError("Pas de données disponnibles");
+          setError("No data available");
         }
         console.log(response.data);
         setLoading(false);
@@ -45,9 +46,9 @@ const Monthly = (props: ActivityProps) => {
           axios.isAxiosError(error) &&
           error.response?.data.message === "no data"
         ) {
-          setError("Données indisponibles");
+          setError("No data available");
         } else {
-          setError("Une erreur est survenue");
+          setError("An error occurred");
         }
         setLoading(false);
       }
@@ -64,7 +65,7 @@ const Monthly = (props: ActivityProps) => {
       }}
       view="year"
       value={date}
-      className="shadow-lg rounded-lg border border-gray-300 place-items-center self-center m-5"
+      className="rounded-2xl m-5 "
     />
   );
 };

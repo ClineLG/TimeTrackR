@@ -1,10 +1,11 @@
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import "../calendar.css";
 import { useEffect, useState, useContext } from "react";
 import dateFormat from "../utils/dateFormat";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { ActivityProps } from "../ActivitiesProps";
+import { Activity } from "./Activity";
 
 const Daily = (props: ActivityProps) => {
   const { setData, setError, setLoading } = props;
@@ -24,17 +25,18 @@ const Daily = (props: ActivityProps) => {
             },
           }
         );
-        const daylyData = [...response.data].map(
-          (activity: { id: string; name: string; time: number }) => {
+        const daylyData = [...response.data]
+          .map((activity: { id: string; name: string; time: number }) => {
             return { x: activity.name, y: activity.time };
-          }
-        );
+          })
+          .filter((activity) => activity.y !== 0)
+          .sort((a, b) => b.y - a.y);
         setData(daylyData);
         if (daylyData.length < 1) {
-          setError("Pas de données disponnibles");
+          setError("Data unavailable");
         }
-        console.log("ResponseDaily", response.data);
-        console.log("ResponseData", daylyData);
+        // console.log("ResponseDaily", response.data);
+        // console.log("ResponseData", daylyData);
 
         setLoading(false);
       } catch (error) {
@@ -43,9 +45,9 @@ const Daily = (props: ActivityProps) => {
           axios.isAxiosError(error) &&
           error.response?.data.message === "no data"
         ) {
-          setError("Données indisponibles");
+          setError("Data unavailable");
         } else {
-          setError("Une erreur est survenue");
+          setError("An error occurred");
         }
         setLoading(false);
       }
@@ -67,7 +69,7 @@ const Daily = (props: ActivityProps) => {
         }
       }}
       value={date}
-      className="shadow-lg rounded-b-4xl  place-items-center p-4 self-center m-5"
+      className="rounded-2xl m-5 "
     />
   );
 };

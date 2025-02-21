@@ -17,13 +17,13 @@ const Login = ({ login }: AuthProps) => {
     event.preventDefault();
 
     if (!password || !email) {
-      setError("Veuillez remplir tous les champs");
+      setError("Please fill in all fields.");
     } else if (
       !email.match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       )
     ) {
-      setError("Veuillez entrer une adresse email valide");
+      setError("Please enter a valid email address.");
     } else {
       try {
         setLoading(true);
@@ -40,53 +40,70 @@ const Login = ({ login }: AuthProps) => {
         setLoading(false);
       } catch (error) {
         console.log(error);
+        if (
+          axios.isAxiosError(error) &&
+          error.response?.data.message === "Email address unknown"
+        ) {
+          setError("The entered email address is unknown.");
+        } else if (
+          axios.isAxiosError(error) &&
+          error.response?.data.message === "Wrong password"
+        ) {
+          setError("Incorrect password");
+        } else {
+          setError("An error occurred");
+        }
         setLoading(false);
       }
     }
   };
 
   return (
-    <section className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h1 className=" text-center text-2xl font-semibold text-gray-800 mb-6">
-        Connexion
-      </h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          setError={setError}
-          placeholder="Email"
-          name="email"
-          setState={setEmail}
-          state={email}
-        />
+    <section className="bg-gray-500 p-10 min-h-screen">
+      <div className="mt-20 max-w-2xl mx-auto p-6 bg-gray-200  text-gray-600  rounded-2xl">
+        <h1 className="text-4xl font-semibold text-center  text-gray-800 pb-5">
+          Sign in
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-7">
+          <Input
+            label="E-mail address"
+            setError={setError}
+            placeholder="E-mail"
+            name="email"
+            setState={setEmail}
+            state={email}
+          />
 
-        <Input
-          setError={setError}
-          placeholder="Mot de Passe"
-          password
-          name="password"
-          setState={setPassword}
-          state={password}
-        />
-        <div className="flex-col flex justify-center">
-          <Link to="/password" className="font-thin text-indigo-600 text-right">
-            mot de passe oublié ?
-          </Link>
-          {error && <p className="bg-red-500">{error}</p>}
+          <Input
+            label="Password"
+            setError={setError}
+            placeholder="*****"
+            password
+            name="password"
+            setState={setPassword}
+            state={password}
+          />
+          <div className="flex-col flex justify-center">
+            <Link to="/password" className="font-thin text-gray-600 text-right">
+              Forgot password ?
+            </Link>
+            {error && <p className="text-red-500 text-center">{error}</p>}
 
-          <button
-            className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-md  hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            disabled={loading ? true : false}
-          >
-            Se connecter
-          </button>
-          <Link
-            to="/signup"
-            className="text-center mt-5 text-indigo-600 underline"
-          >
-            Pas de compte ? S'inscrire
-          </Link>
-        </div>
-      </form>
+            <button
+              className="p-3 my-2 w-fit mx-auto px-10  bg-gray-800 text-white rounded-md  hover:bg-gray-500 "
+              disabled={loading ? true : false}
+            >
+              Submit
+            </button>
+            <Link
+              to="/signup"
+              className="text-center mt-5 text-gray-600 underline"
+            >
+              No account ? Sign up
+            </Link>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };
