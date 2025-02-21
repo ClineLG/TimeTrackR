@@ -7,7 +7,6 @@ import {
   VictoryAxis,
   VictoryTooltip,
   LineSegment,
-  VictoryLabel,
 } from "victory";
 
 import totalHours from "../utils/totalInHours";
@@ -234,7 +233,9 @@ const Statistics = () => {
                 />
 
                 <VictoryAxis
-                  tickFormat={(tick, i) => `${tick}\n ${totalHours(Data[i].y)}`}
+                  tickFormat={(tick: { x: string; y: number }, i: number) =>
+                    `${tick}\n ${Data ? totalHours(Data[i].y) : ""}`
+                  }
                   style={{
                     axis: { stroke: "white" },
                     ticks: { stroke: "white" },
@@ -247,8 +248,8 @@ const Statistics = () => {
                     },
                     grid: { stroke: "#d8d8d8" },
                   }}
-                  domain={[0, Data.length + 1]}
-                  tickValues={Data.map((datum, index) => index + 1)}
+                  domain={[0, Data ? Data.length + 1 : 1]}
+                  tickValues={Data && Data.map((_, index) => index + 1)}
                 />
               </VictoryChart>
             </div>

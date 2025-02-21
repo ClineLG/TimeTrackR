@@ -131,7 +131,7 @@ const MyAccount = (props: AccountProps) => {
         >
           <Input
             setError={setError}
-            placeholder={data.email}
+            placeholder={data ? data.email : ""}
             label="E-mail address"
             name="email"
             setState={setEmail}
@@ -139,7 +139,7 @@ const MyAccount = (props: AccountProps) => {
           />
           <Input
             setError={setError}
-            placeholder={data.username}
+            placeholder={data ? data.username : ""}
             name="username"
             label="Username"
             setState={setUsername}

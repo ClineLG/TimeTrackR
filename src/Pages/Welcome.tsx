@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import welcome from "../assets/welcome.png";
 import { TokenProps } from "../UserTypes";
 import home from "../assets/homePage.png";
-import pie from "../assets/pie.png";
+// import pie from "../assets/pie.png";
 import bar from "../assets/bar.png";
 
 const Welcome = ({ checkUser }: TokenProps) => {
