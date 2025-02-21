@@ -5,7 +5,6 @@ import dateFormat from "../utils/dateFormat";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 import { ActivityProps } from "../ActivitiesProps";
-import { Activity } from "./Activity";
 
 const Daily = (props: ActivityProps) => {
   const { setData, setError, setLoading } = props;
