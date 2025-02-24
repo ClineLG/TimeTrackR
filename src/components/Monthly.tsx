@@ -57,16 +57,17 @@ const Monthly = (props: ActivityProps) => {
   }, [year, month]);
 
   return (
-    <div className="w-3/4 bg-amber-100 sm:w-fit">
+    <div className="w-3/4 sm:w-fit">
       <Calendar
         onClickMonth={(event) => {
           setDate(event);
           setYear(event.getFullYear().toString());
           setMonth((event.getMonth() + 1).toString());
         }}
+        locale="en-GB"
         view="year"
         value={date}
-        className="rounded-2xl"
+        className="rounded-2xl p-2 "
       />
     </div>
   );

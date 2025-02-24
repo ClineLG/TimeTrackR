@@ -96,17 +96,15 @@ export const Activity = React.memo(function Activity(props: {
   };
 
   return (
-    <li className=" h-15  p-4 text-xs bg-gray-800 text-gray-200 rounded-lg flex gap-2 justify-between items-center  hover:bg-gray-900 transition duration-300">
-      <p className="font-bold w-1/3"> {activity.name}</p>
+    <li className=" h-fit  p-4 text-xs bg-gray-800 text-gray-200 rounded-lg  hover:bg-gray-900 transition duration-300">
+      <div className="flex justify-between items-center ">
+        <p className="font-bold flex-auto"> {activity.name}</p>
 
-      <div className="flex items-center space-x-4 flex-auto justify-center">
-        {!stop ? (
-          <p className="flex-auto"> {formatTime()}</p>
-        ) : (
-          <div className="flex-auto"></div>
-        )}
+        <div className=" flex-auto">
+          {!stop ? <p> {formatTime()}</p> : <div></div>}
+        </div>
         <button
-          className={` bg-gray-200 rounded-lg text-xl hover:cursor-pointer py-2 px-2  ${
+          className={` bg-gray-200 rounded-lg text-xl  hover:cursor-pointer py-2 px-2  ${
             stop
               ? " text-gray-800 rounded-lg hover:bg-gray-800 hover:text-white hover:border "
               : " text-red-700 hover:bg-gray-800 "
@@ -116,7 +114,13 @@ export const Activity = React.memo(function Activity(props: {
           {stop ? <VscDebugStart /> : <FaStopCircle />}
         </button>
       </div>
-      <div className="flex  gap-3 w-1/4 text-xl justify-end ">
+      <div className="flex mt-4 mx-1 justify-between w-full text-xl ">
+        <button
+          onClick={handleEdit}
+          className="text-gray-00 hover:cursor-pointer hover:text-yellow-400 focus:outline-none flex items-center gap-1.5"
+        >
+          <MdEdit />
+        </button>
         <button
           onClick={() => {
             if (!stop) {
@@ -127,13 +131,6 @@ export const Activity = React.memo(function Activity(props: {
           className="text-red-700 hover:cursor-pointer hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           <FaRegTrashAlt />
-        </button>
-
-        <button
-          onClick={handleEdit}
-          className="text-gray-00 hover:cursor-pointer hover:text-yellow-400 focus:outline-none flex items-center gap-1.5"
-        >
-          <MdEdit />
         </button>
       </div>
     </li>

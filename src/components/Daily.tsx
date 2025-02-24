@@ -68,8 +68,9 @@ const Daily = (props: ActivityProps) => {
             }
           }
         }}
+        locale="en-GB"
         value={date}
-        className="w-full rounded-2xl  "
+        className="w-full rounded-2xl p-1"
       />
     </div>
   );
