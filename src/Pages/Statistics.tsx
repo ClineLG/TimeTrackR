@@ -173,10 +173,7 @@ const Statistics = () => {
         </div>
       ) : (
         <div className="w-full flex justify-center">
-          <div
-            style={{ touchAction: "pan-x" }}
-            className="w-full  overflow-x-auto rounded-2xl "
-          >
+          <div className="w-full  overflow-x-auto rounded-2xl ">
             <div
               style={{
                 width: Data
@@ -193,12 +190,9 @@ const Statistics = () => {
                 domainPadding={{ x: 0, y: 0 }}
                 width={
                   Data
-                    ? Math.max(
-                        Data.length <= 3
-                          ? Data.length * 300
-                          : Data.length * 150,
-                        600
-                      )
+                    ? Data.length <= 3
+                      ? Data.length * 300
+                      : Data.length * 150
                     : 0
                 }
                 height={500}
