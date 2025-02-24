@@ -181,6 +181,7 @@ const Statistics = () => {
                   ? Data.length * 300
                   : Data.length * 150
                 : "auto",
+              minWidth: "1000px",
             }}
           >
             <VictoryChart
@@ -202,8 +203,6 @@ const Statistics = () => {
                 cornerRadius={{ top: 20 }}
                 data={Data}
                 labelComponent={<VictoryTooltip />}
-                // labels={({ datum }) => }
-                // labelComponent={<VictoryLabel dy={-30} />}
                 style={{
                   data: {
                     fill: ({ datum }) =>
