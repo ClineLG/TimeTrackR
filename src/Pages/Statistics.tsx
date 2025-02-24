@@ -193,9 +193,12 @@ const Statistics = () => {
                 domainPadding={{ x: 0, y: 0 }}
                 width={
                   Data
-                    ? Data.length <= 3
-                      ? Data.length * 300
-                      : Data.length * 150
+                    ? Math.max(
+                        Data.length <= 3
+                          ? Data.length * 300
+                          : Data.length * 150,
+                        600
+                      )
                     : 0
                 }
                 height={500}
