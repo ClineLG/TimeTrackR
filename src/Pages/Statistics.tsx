@@ -172,87 +172,85 @@ const Statistics = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full flex justify-center">
-          <div className="w-full overflow-x-auto rounded-2xl">
-            <div
-              style={{
-                width: Data
+        <div className="w-full overflow-x-auto">
+          <div
+            className="bg-gray-800 rounded-2xl "
+            style={{
+              width: Data
+                ? Data.length <= 3
+                  ? Data.length * 300
+                  : Data.length * 150
+                : "auto",
+            }}
+          >
+            <VictoryChart
+              theme={VictoryTheme.material}
+              padding={{ left: 100, right: 50, top: 50, bottom: 100 }}
+              domainPadding={{ x: 0, y: 0 }}
+              width={
+                Data
                   ? Data.length <= 3
                     ? Data.length * 300
                     : Data.length * 150
-                  : "auto",
-              }}
-              className="bg-gray-800 w-full  overflow-x-auto  mx-auto rounded-2xl"
+                  : 0
+              }
+              height={500}
             >
-              <VictoryChart
-                theme={VictoryTheme.material}
-                padding={{ left: 100, right: 50, top: 50, bottom: 100 }}
-                domainPadding={{ x: 0, y: 0 }}
-                width={
-                  Data
-                    ? Data.length <= 3
-                      ? Data.length * 300
-                      : Data.length * 150
-                    : 0
-                }
+              <VictoryBar
+                barWidth={40}
                 height={500}
-              >
-                <VictoryBar
-                  barWidth={40}
-                  height={500}
-                  cornerRadius={{ top: 20 }}
-                  data={Data}
-                  labelComponent={<VictoryTooltip />}
-                  // labels={({ datum }) => }
-                  // labelComponent={<VictoryLabel dy={-30} />}
-                  style={{
-                    data: {
-                      fill: ({ datum }) =>
-                        datum.y >= 180
-                          ? "#4F3AF6"
-                          : datum.y > 60 && datum.y < 180
-                          ? "#3ac3f4"
-                          : "#3af46f",
-                    },
-                  }}
-                  alignment="middle"
-                />
+                cornerRadius={{ top: 20 }}
+                data={Data}
+                labelComponent={<VictoryTooltip />}
+                // labels={({ datum }) => }
+                // labelComponent={<VictoryLabel dy={-30} />}
+                style={{
+                  data: {
+                    fill: ({ datum }) =>
+                      datum.y >= 180
+                        ? "#4F3AF6"
+                        : datum.y > 60 && datum.y < 180
+                        ? "#3ac3f4"
+                        : "#3af46f",
+                  },
+                }}
+                alignment="middle"
+              />
 
-                <VictoryAxis
-                  dependentAxis
-                  tickFormat={(tick) => `${totalHours(tick)}`}
-                  style={{
-                    axis: { stroke: "white" },
-                    ticks: { stroke: "transparent" },
-                    tickLabels: {
-                      fill: " #3ac3f4",
-                      fontSize: 11,
-                    },
-                    grid: { stroke: "#d8d8d8" },
-                  }}
-                />
+              <VictoryAxis
+                dependentAxis
+                tickFormat={(tick) => `${totalHours(tick)}`}
+                style={{
+                  axis: { stroke: "white" },
+                  ticks: { stroke: "transparent" },
+                  tickLabels: {
+                    fill: " #3ac3f4",
+                    fontSize: 11,
+                  },
+                  grid: { stroke: "#d8d8d8" },
+                }}
+              />
 
-                <VictoryAxis
-                  tickFormat={(tick: { x: string; y: number }, i: number) =>
-                    `${tick}\n ${Data ? totalHours(Data[i].y) : ""}`
-                  }
-                  style={{
-                    axis: { stroke: "white" },
-                    ticks: { stroke: "white" },
+              <VictoryAxis
+                tickFormat={(tick: { x: string; y: number }, i: number) =>
+                  `${tick}\n ${Data ? totalHours(Data[i].y) : ""}`
+                }
+                style={{
+                  axis: { stroke: "white" },
+                  ticks: { stroke: "white" },
 
-                    tickLabels: {
-                      fill: "#3af46f",
-                      fontSize: 12,
-                      angle: 15,
-                      padding: 15,
-                    },
-                    grid: { stroke: "#d8d8d8" },
-                  }}
-                  domain={[0, Data ? Data.length + 1 : 1]}
-                  tickValues={Data && Data.map((_, index) => index + 1)}
-                />
-              </VictoryChart>
-            </div>
+                  tickLabels: {
+                    fill: "#3af46f",
+                    fontSize: 12,
+                    angle: 15,
+                    padding: 15,
+                  },
+                  grid: { stroke: "#d8d8d8" },
+                }}
+                domain={[0, Data ? Data.length + 1 : 1]}
+                tickValues={Data && Data.map((_, index) => index + 1)}
+              />
+            </VictoryChart>
           </div>
         </div>
       )}
