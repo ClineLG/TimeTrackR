@@ -72,7 +72,7 @@ const Statistics = () => {
         <h1 className="text-4xl font-semibold text-center pb-5">
           My Statistics
         </h1>
-        <div className="flex justify-center gap-6 mb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 justify-center gap-6 mb-4">
           <ButtonStatistics
             selectedTime={selectedTime}
             setSelectedTime={setSelectedTime}
@@ -100,7 +100,7 @@ const Statistics = () => {
         </div>
       </div>
 
-      <div className="bg-gray-800  text-gray-800  p-5 rounded-2xl flex flex-col gap-5 items-center text-center max-w-7xl mx-auto">
+      <div className="bg-gray-800 w-full text-gray-800  p-2 sm:p-5 rounded-2xl flex flex-col gap-5 items-center text-center max-w-3xl mx-auto">
         {ComponentSelected()}
       </div>
       <div className="mx-auto flex w-fit rounded-2xl overflow-hidden">

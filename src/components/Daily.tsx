@@ -55,21 +55,23 @@ const Daily = (props: ActivityProps) => {
   }, [date]);
 
   return (
-    <Calendar
-      onChange={(event) => {
-        if (Array.isArray(event)) {
-          if (event[0]) {
-            setDate(dateFormat(new Date(event[0])));
+    <div className="w-3/4 sm:w-fit">
+      <Calendar
+        onChange={(event) => {
+          if (Array.isArray(event)) {
+            if (event[0]) {
+              setDate(dateFormat(new Date(event[0])));
+            }
+          } else {
+            if (event) {
+              setDate(dateFormat(new Date(event)));
+            }
           }
-        } else {
-          if (event) {
-            setDate(dateFormat(new Date(event)));
-          }
-        }
-      }}
-      value={date}
-      className="rounded-2xl m-5 "
-    />
+        }}
+        value={date}
+        className="w-full rounded-2xl  "
+      />
+    </div>
   );
 };
 export default Daily;

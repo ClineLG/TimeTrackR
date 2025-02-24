@@ -106,7 +106,7 @@ export const Activity = React.memo(function Activity(props: {
           <div className="flex-auto"></div>
         )}
         <button
-          className={` bg-gray-200 rounded-lg hover:cursor-pointer py-2 px-4  ${
+          className={` bg-gray-200 rounded-lg text-xl hover:cursor-pointer py-2 px-2  ${
             stop
               ? " text-gray-800 rounded-lg hover:bg-gray-800 hover:text-white hover:border "
               : " text-red-700 hover:bg-gray-800 "

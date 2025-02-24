@@ -53,15 +53,15 @@ const ModalEdit = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-[rgb(255,255,255)]/50 flex justify-center items-center z-2">
-      <div className="bg-gray-800 text-gray-200 p-10 rounded-lg  w-72   flex flex-col gap-5 items-center">
+    <div className="fixed inset-0 bg-[rgb(255,255,255)]/50 flex justify-center items-center z-10">
+      <div className="bg-gray-800 text-gray-200 p-5 sm:p-10 rounded-lg  w-90   h-auto flex flex-col gap-4 items-center">
         <h2 className="text-2xl font-semibold mb-4">Add time</h2>
 
         <div className="flex gap-2.5 justify-center place-items-center">
           <input
             type="number"
             id="hour"
-            className="w-16 p-3 mb-4 border border-gray-300 rounded-lg  focus:outline-none"
+            className="w-16 p-3 mb-4 border  border-gray-300 rounded-lg text-lg focus:outline-none"
             placeholder="00"
             onChange={(event) => {
               const obj = { ...time, hours: event.target.value };
