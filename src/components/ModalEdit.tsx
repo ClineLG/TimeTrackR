@@ -107,13 +107,13 @@ const ModalEdit = ({
             className="px-3 py-3 bg-gray-200  box-border rounded-2xl text-xs font-medium text-gray-800 hover:border-gray-200 hover:border hover:cursor-pointer hover:bg-gray-800 hover:text-gray-200 transition"
             onClick={() => setEdit(false)}
           >
-            Annuler
+            Cancel
           </button>
           <button
             className="px-3 py-3 bg-green-800 rounded-2xl text-xs font-medium text-white hover:cursor-pointer hover:bg-green-600 transition"
             onClick={handleSubmit}
           >
-            Ajouter
+            Add
           </button>
         </div>
       </div>

@@ -104,11 +104,7 @@ export const Activity = React.memo(function Activity(props: {
           {!stop ? <p> {formatTime()}</p> : <div></div>}
         </div>
         <button
-          className={` text-gray-800  bg-gray-400 rounded-lg text-xl  hover:cursor-pointer py-2 px-2  ${
-            stop
-              ? " rounded-lg hover:bg-gray-800 hover:text-white hover:border "
-              : " hover:bg-gray-800 "
-          }`}
+          className=" text-gray-800  bg-gray-400 rounded-lg text-xl  hover:text-white hover:border hover:cursor-pointer py-2 px-2"
           onClick={handleStart}
         >
           {stop ? <VscDebugStart /> : <FaStopCircle />}

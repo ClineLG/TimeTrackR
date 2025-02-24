@@ -173,7 +173,10 @@ const Statistics = () => {
         </div>
       ) : (
         <div className="w-full flex justify-center">
-          <div className="w-full  overflow-x-auto rounded-2xl ">
+          <div
+            style={{ touchAction: "pan-x" }}
+            className="w-full  overflow-x-auto rounded-2xl "
+          >
             <div
               style={{
                 width: Data
