@@ -57,16 +57,18 @@ const Monthly = (props: ActivityProps) => {
   }, [year, month]);
 
   return (
-    <Calendar
-      onClickMonth={(event) => {
-        setDate(event);
-        setYear(event.getFullYear().toString());
-        setMonth((event.getMonth() + 1).toString());
-      }}
-      view="year"
-      value={date}
-      className="rounded-2xl m-5 "
-    />
+    <div className="w-3/4 bg-amber-100 sm:w-fit">
+      <Calendar
+        onClickMonth={(event) => {
+          setDate(event);
+          setYear(event.getFullYear().toString());
+          setMonth((event.getMonth() + 1).toString());
+        }}
+        view="year"
+        value={date}
+        className="rounded-2xl"
+      />
+    </div>
   );
 };
 export default Monthly;

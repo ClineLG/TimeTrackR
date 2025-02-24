@@ -8,15 +8,16 @@ import bar from "../assets/bar.png";
 const Welcome = ({ checkUser }: TokenProps) => {
   return (
     <>
-      <section className="flex items-center justify-center  text-white text-center ">
+      <section className="flex items-center justify-center relative text-white text-center ">
         <img
           src={welcome}
           alt="image"
           className="object-cover h-[100vh] w-full opacity-90  "
         />
-        <div className="absolute text-gray-200  bg-[rgb(0,0,0)]/50 w-full py-20 ">
-          <h1 className="text-5xl font-bold leading-tight mb-6">
-            Track your activity, improve your productivity.{" "}
+
+        <div className="absolute text-gray-200  bg-[rgb(0,0,0)]/50 w-full py-20 px-10 ">
+          <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-6">
+            Track your activity, improve your productivity.
           </h1>
           <p className="text-lg  mb-6">
             With ActivityTrackR, easily track your working hours, analyze your
