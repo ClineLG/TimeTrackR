@@ -32,11 +32,14 @@ const Signup = ({ login }: AuthProps) => {
       try {
         setLoading(true);
 
-        const response = await axios.post("http://localhost:3000/user/signup", {
-          password: password,
-          username: username,
-          email: email,
-        });
+        const response = await axios.post(
+          "https://site--timetrackr--phx29rm2mv76.code.run/user/signup",
+          {
+            password: password,
+            username: username,
+            email: email,
+          }
+        );
         login(response.data);
 
         navigate("/home");

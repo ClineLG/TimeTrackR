@@ -23,11 +23,14 @@ const MyAccount = (props: AccountProps) => {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/user/details", {
-          headers: {
-            Authorization: "Bearer " + checkUser(),
-          },
-        });
+        const response = await axios.get(
+          "https://site--timetrackr--phx29rm2mv76.code.run/user/details",
+          {
+            headers: {
+              Authorization: "Bearer " + checkUser(),
+            },
+          }
+        );
         console.log(response.data);
         // setEmail(response.data.email);
         // setUsername(response.data.username);
@@ -60,7 +63,7 @@ const MyAccount = (props: AccountProps) => {
       try {
         setIsLoading(true);
         const response = await axios.put(
-          "http://localhost:3000/user/update",
+          "https://site--timetrackr--phx29rm2mv76.code.run/user/update",
           {
             password,
             username,
@@ -99,11 +102,14 @@ const MyAccount = (props: AccountProps) => {
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.delete("http://localhost:3000/user/delete", {
-        headers: {
-          Authorization: "Bearer " + checkUser(),
-        },
-      });
+      const response = await axios.delete(
+        "https://site--timetrackr--phx29rm2mv76.code.run/user/delete",
+        {
+          headers: {
+            Authorization: "Bearer " + checkUser(),
+          },
+        }
+      );
       setIsLoading(false);
       if (response) {
         navigate("/");

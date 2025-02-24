@@ -29,7 +29,7 @@ const PasswordForgotten = () => {
         setLoading(true);
 
         const response = await axios.post(
-          "http://localhost:3000/user/send-email",
+          "https://site--timetrackr--phx29rm2mv76.code.run/user/send-email",
           {
             email: email,
           }

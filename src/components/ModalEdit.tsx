@@ -31,7 +31,7 @@ const ModalEdit = ({
         const totalTime = Number(time.hours) * 60 + Number(time.minutes);
         console.log("Total", totalTime);
         const response = await axios.post(
-          "http://localhost:3000/activity/addTime",
+          "https://site--timetrackr--phx29rm2mv76.code.run/activity/addTime",
 
           { id: idToEdit.id, date: date, time: totalTime, name: idToEdit.name },
           {
