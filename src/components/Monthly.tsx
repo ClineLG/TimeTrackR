@@ -57,7 +57,7 @@ const Monthly = (props: ActivityProps) => {
   }, [year, month]);
 
   return (
-    <div className="w-3/4 sm:w-fit">
+    <div className="w-full">
       <Calendar
         onClickMonth={(event) => {
           setDate(event);
@@ -67,7 +67,7 @@ const Monthly = (props: ActivityProps) => {
         locale="en-GB"
         view="year"
         value={date}
-        className="rounded-2xl p-2 "
+        className="rounded-2xl p-1  mx-auto"
       />
     </div>
   );

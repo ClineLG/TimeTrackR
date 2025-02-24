@@ -104,23 +104,17 @@ export const Activity = React.memo(function Activity(props: {
           {!stop ? <p> {formatTime()}</p> : <div></div>}
         </div>
         <button
-          className={` bg-gray-200 rounded-lg text-xl  hover:cursor-pointer py-2 px-2  ${
+          className={` text-gray-800  bg-gray-400 rounded-lg text-xl  hover:cursor-pointer py-2 px-2  ${
             stop
-              ? " text-gray-800 rounded-lg hover:bg-gray-800 hover:text-white hover:border "
-              : " text-red-700 hover:bg-gray-800 "
+              ? " rounded-lg hover:bg-gray-800 hover:text-white hover:border "
+              : " hover:bg-gray-800 "
           }`}
           onClick={handleStart}
         >
           {stop ? <VscDebugStart /> : <FaStopCircle />}
         </button>
       </div>
-      <div className="flex mt-4 mx-1 justify-between w-full text-xl ">
-        <button
-          onClick={handleEdit}
-          className="text-gray-00 hover:cursor-pointer hover:text-yellow-400 focus:outline-none flex items-center gap-1.5"
-        >
-          <MdEdit />
-        </button>
+      <div className="flex  mt-10 mx-1 items-end pr-3 justify-between w-full text-xl ">
         <button
           onClick={() => {
             if (!stop) {
@@ -131,6 +125,12 @@ export const Activity = React.memo(function Activity(props: {
           className="text-red-700 hover:cursor-pointer hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
         >
           <FaRegTrashAlt />
+        </button>{" "}
+        <button
+          onClick={handleEdit}
+          className="text-gray-00 hover:cursor-pointer hover:text-yellow-400 focus:outline-none flex items-center gap-1.5"
+        >
+          <MdEdit />
         </button>
       </div>
     </li>

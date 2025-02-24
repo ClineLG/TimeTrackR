@@ -55,7 +55,7 @@ const Daily = (props: ActivityProps) => {
   }, [date]);
 
   return (
-    <div className="w-3/4 sm:w-fit">
+    <div className="w-full">
       <Calendar
         onChange={(event) => {
           if (Array.isArray(event)) {
@@ -70,7 +70,7 @@ const Daily = (props: ActivityProps) => {
         }}
         locale="en-GB"
         value={date}
-        className="w-full rounded-2xl p-1"
+        className="w-full rounded-2xl p-1  mx-auto"
       />
     </div>
   );
