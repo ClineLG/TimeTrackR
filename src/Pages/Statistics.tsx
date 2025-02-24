@@ -173,7 +173,7 @@ const Statistics = () => {
         </div>
       ) : (
         <div className="w-full flex justify-center">
-          <div className="w-full  overflow-x-auto rounded-2xl ">
+          <div className="w-full overflow-x-auto rounded-2xl">
             <div
               style={{
                 width: Data
@@ -182,7 +182,7 @@ const Statistics = () => {
                     : Data.length * 150
                   : "auto",
               }}
-              className="bg-gray-800  mx-auto rounded-2xl"
+              className="bg-gray-800 w-full  overflow-x-auto  mx-auto rounded-2xl"
             >
               <VictoryChart
                 theme={VictoryTheme.material}
