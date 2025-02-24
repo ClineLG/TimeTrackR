@@ -96,6 +96,7 @@ const ModalEdit = ({
                 setDate(event);
               }
             }}
+            locale="en-GB"
             value={date} // La date affichée dans le calendrier
             className="rounded-lg react-calendar text-xs"
           />

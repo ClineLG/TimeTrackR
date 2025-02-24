@@ -15,7 +15,7 @@ const Year = (props: ActivityProps) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `https://site--timetrackr--phx29rm2mv76.code.run/year/?year=${year}`,
+          `https://site--timetrackr--phx29rm2mv76.code.run/activities/year/?year=${year}`,
           {
             headers: {
               Authorization: "Bearer " + checkUser(),
