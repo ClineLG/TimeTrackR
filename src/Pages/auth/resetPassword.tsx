@@ -27,7 +27,7 @@ const ResetPassword = ({ login }: AuthProps) => {
         setLoading(true);
 
         const response = await axios.put(
-          "http://localhost:3000/user/reset-password",
+          "https://site--timetrackr--phx29rm2mv76.code.run/user/reset-password",
           {
             password: password,
             email: email,

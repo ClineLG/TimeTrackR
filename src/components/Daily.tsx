@@ -17,7 +17,7 @@ const Daily = (props: ActivityProps) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/activities/daily/?date=${date}`,
+          `https://site--timetrackr--phx29rm2mv76.code.run/activities/daily/?date=${date}`,
           {
             headers: {
               Authorization: "Bearer " + checkUser(),

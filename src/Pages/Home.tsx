@@ -43,11 +43,14 @@ const Home = ({ checkUser }: TokenProps) => {
       return;
     }
     try {
-      const response = await axios.get("http://localhost:3000/activities/all", {
-        headers: {
-          Authorization: "Bearer " + checkUser(),
-        },
-      });
+      const response = await axios.get(
+        "https://site--timetrackr--phx29rm2mv76.code.run/activities/all",
+        {
+          headers: {
+            Authorization: "Bearer " + checkUser(),
+          },
+        }
+      );
       // console.log("Response<<<<", response.data);
       setActivities(response.data.activities);
       setUser(response.data.user);
@@ -65,7 +68,7 @@ const Home = ({ checkUser }: TokenProps) => {
       try {
         setIsLoading(true);
         const response = await axios.post(
-          "http://localhost:3000/activity/create",
+          "https://site--timetrackr--phx29rm2mv76.code.run/activity/create",
           { name: newActivity },
           {
             headers: {
@@ -92,7 +95,7 @@ const Home = ({ checkUser }: TokenProps) => {
     try {
       console.log("ID", id);
       const response = await axios.post(
-        "http://localhost:3000/activity/delete",
+        "https://site--timetrackr--phx29rm2mv76.code.run/activity/delete",
         { id: id },
         {
           headers: {
@@ -123,7 +126,7 @@ const Home = ({ checkUser }: TokenProps) => {
         <p className=" font-light text-2xl">"{user.quote}"</p>
       </div>
 
-      <div className="mt-10 mb-10   flex  text-gray-800  flex-col gap-6 max-w-7xl mx-auto bg-gray-200 rounded-2xl p-10">
+      <div className="mt-10 mb-10   flex  text-gray-00  flex-col gap-6 max-w-7xl mx-auto bg-gray-200 rounded-2xl p-10">
         <h1 className="text-4xl pb-5 font-semibold  text-center">Activities</h1>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}

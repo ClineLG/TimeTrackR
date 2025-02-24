@@ -22,7 +22,7 @@ const Monthly = (props: ActivityProps) => {
         setLoading(true);
 
         const response = await axios.get(
-          `http://localhost:3000/activities/month/?year=${year}&month=${month}`,
+          `https://site--timetrackr--phx29rm2mv76.code.run/activities/month/?year=${year}&month=${month}`,
           {
             headers: {
               Authorization: "Bearer " + checkUser(),

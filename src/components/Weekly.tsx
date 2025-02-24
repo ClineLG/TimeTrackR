@@ -20,7 +20,7 @@ const Weekly = (props: ActivityProps) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/activities/weekly/?year=${year}&week=${week}`,
+          `https://site--timetrackr--phx29rm2mv76.code.run/activities/weekly/?year=${year}&week=${week}`,
           {
             headers: {
               Authorization: "Bearer " + checkUser(),
