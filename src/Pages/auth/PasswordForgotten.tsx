@@ -39,15 +39,17 @@ const PasswordForgotten = () => {
 
         setLoading(false);
       } catch (error) {
-        console.log(error);
-        if (
-          axios.isAxiosError(error) &&
-          error.response?.data.message === "unknown email"
-        ) {
-          setError("The entered email address is unknown.");
-        } else {
-          setError("An error occurred");
+        if (error) {
+          if (
+            axios.isAxiosError(error) &&
+            error.response?.data.message === "unknown email"
+          ) {
+            setError("The entered email address is unknown.");
+          } else {
+            setError("An error occurred");
+          }
         }
+
         setLoading(false);
       }
     }

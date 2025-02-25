@@ -42,20 +42,22 @@ const Login = ({ login }: AuthProps) => {
         navigate("/home");
         setLoading(false);
       } catch (error) {
-        console.log(error);
-        if (
-          axios.isAxiosError(error) &&
-          error.response?.data.message === "Email address unknown"
-        ) {
-          setError("The entered email address is unknown.");
-        } else if (
-          axios.isAxiosError(error) &&
-          error.response?.data.message === "Wrong password"
-        ) {
-          setError("Incorrect password");
-        } else {
-          setError("An error occurred");
+        if (error) {
+          if (
+            axios.isAxiosError(error) &&
+            error.response?.data.message === "Email address unknown"
+          ) {
+            setError("The entered email address is unknown.");
+          } else if (
+            axios.isAxiosError(error) &&
+            error.response?.data.message === "Wrong password"
+          ) {
+            setError("Incorrect password");
+          } else {
+            setError("An error occurred");
+          }
         }
+
         setLoading(false);
       }
     }

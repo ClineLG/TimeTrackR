@@ -26,22 +26,7 @@ const Home = ({ checkUser }: TokenProps) => {
   const [idToEdit, setIdToEdit] = useState({ name: "", id: "" });
   const [user, setUser] = useState({ name: "", quote: "" });
 
-  //USEREDUCER
-  // const initialState={activities:[],loading:true,error:"",isLoading:false,create:false,newActivity:''}
-
-  // const reducer = (state,action)=>{
-  //   switch (action.type){
-  //     case "SET_ACTIVITIES":
-  //       return {...state,activities:action.payload};
-
-  //   }
-  // }
-
   const fetchData = async () => {
-    if (!checkUser()) {
-      console.log("User is null");
-      return;
-    }
     try {
       const response = await axios.get(
         "https://site--timetrackr--phx29rm2mv76.code.run/activities/all",
@@ -51,12 +36,12 @@ const Home = ({ checkUser }: TokenProps) => {
           },
         }
       );
-      // console.log("Response<<<<", response.data);
       setActivities(response.data.activities);
       setUser(response.data.user);
     } catch (error) {
-      console.log(error);
-      setError("une erreur est survenue");
+      if (error) {
+        setError("An error occurred");
+      }
     }
   };
 
@@ -67,7 +52,7 @@ const Home = ({ checkUser }: TokenProps) => {
     } else {
       try {
         setIsLoading(true);
-        const response = await axios.post(
+        await axios.post(
           "https://site--timetrackr--phx29rm2mv76.code.run/activity/create",
           { name: newActivity },
           {
@@ -80,21 +65,18 @@ const Home = ({ checkUser }: TokenProps) => {
         setCreate(false);
         setIsLoading(false);
         fetchData();
-        console.log(response.data);
       } catch (error) {
         if (error) {
-          setError("une erreur est survenue veuillez réessayer");
+          setError("An error occurred");
         }
         setIsLoading(false);
       }
     }
   };
 
-  ///////////////////////////////////////
   const handleDelete = async (id: string) => {
     try {
-      console.log("ID", id);
-      const response = await axios.post(
+      await axios.post(
         "https://site--timetrackr--phx29rm2mv76.code.run/activity/delete",
         { id: id },
         {
@@ -103,10 +85,11 @@ const Home = ({ checkUser }: TokenProps) => {
           },
         }
       );
-      console.log(response.data);
       fetchData();
     } catch (error) {
-      console.log(error);
+      if (error) {
+        setError("An error occurred");
+      }
     }
   };
 

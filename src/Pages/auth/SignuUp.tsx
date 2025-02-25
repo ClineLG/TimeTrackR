@@ -45,15 +45,17 @@ const Signup = ({ login }: AuthProps) => {
         navigate("/home");
         setLoading(false);
       } catch (error) {
-        console.log(error);
-        if (
-          axios.isAxiosError(error) &&
-          error.response?.data.message === "email allready used"
-        ) {
-          setError("E-mail address already in use");
-        } else {
-          setError("An error occurred");
+        if (error) {
+          if (
+            axios.isAxiosError(error) &&
+            error.response?.data.message === "email allready used"
+          ) {
+            setError("E-mail address already in use");
+          } else {
+            setError("An error occurred");
+          }
         }
+
         setLoading(false);
       }
     }

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import welcome from "../assets/welcome.png";
 import { TokenProps } from "../UserTypes";
 import home from "../assets/homePage.png";
-// import pie from "../assets/pie.png";
 import bar from "../assets/bar.png";
 
 const Welcome = ({ checkUser }: TokenProps) => {
@@ -57,7 +56,6 @@ const Welcome = ({ checkUser }: TokenProps) => {
                 you spend your time. Identify patterns, areas for improvement,
                 and measure your productivity over time.{" "}
               </p>
-              {/* <img src={pie} alt="" /> */}
               <img src={bar} className="object-cover rounded-2xl" alt="" />
             </div>
 

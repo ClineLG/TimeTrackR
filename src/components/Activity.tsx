@@ -30,7 +30,7 @@ export const Activity = React.memo(function Activity(props: {
 
   const handleStart = async () => {
     if (stop) {
-      const response = await axios.post(
+      await axios.post(
         "https://site--timetrackr--phx29rm2mv76.code.run/activity/start",
         { id: activity._id },
         {
@@ -39,9 +39,8 @@ export const Activity = React.memo(function Activity(props: {
           },
         }
       );
-      console.log(response.data);
     } else {
-      const response = await axios.post(
+      await axios.post(
         "https://site--timetrackr--phx29rm2mv76.code.run/activity/stop",
         { id: activity._id, name: activity.name },
         {
@@ -50,7 +49,6 @@ export const Activity = React.memo(function Activity(props: {
           },
         }
       );
-      console.log(response.data);
       setTime(0);
     }
 

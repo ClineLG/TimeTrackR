@@ -39,7 +39,6 @@ const Monthly = (props: ActivityProps) => {
         if (monthlyData.length < 1) {
           setError("No data available");
         }
-        console.log(response.data);
         setLoading(false);
       } catch (error) {
         if (

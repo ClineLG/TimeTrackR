@@ -37,7 +37,6 @@ const Weekly = (props: ActivityProps) => {
           setError("No data available");
         }
         setData(WeeklyData);
-        // console.log(response.data);
         setLoading(false);
       } catch (error) {
         if (

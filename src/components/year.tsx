@@ -32,18 +32,19 @@ const Year = (props: ActivityProps) => {
         if (YearData.length < 1) {
           setError("No data available");
         }
-        console.log(response.data);
         setLoading(false);
       } catch (error) {
-        console.log(error);
-        if (
-          axios.isAxiosError(error) &&
-          error.response?.data.message === "no data"
-        ) {
-          setError("No data available");
-        } else {
-          setError("An error occurred");
+        if (error) {
+          if (
+            axios.isAxiosError(error) &&
+            error.response?.data.message === "no data"
+          ) {
+            setError("No data available");
+          } else {
+            setError("An error occurred");
+          }
         }
+
         setLoading(false);
       }
     };

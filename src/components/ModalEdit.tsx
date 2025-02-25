@@ -20,8 +20,6 @@ const ModalEdit = ({
   const [error, setError] = useState("");
   const { checkUser } = useContext(UserContext);
 
-  console.log(date);
-
   const handleSubmit = async () => {
     setError("");
     if (!date) {
@@ -29,7 +27,6 @@ const ModalEdit = ({
     } else {
       try {
         const totalTime = Number(time.hours) * 60 + Number(time.minutes);
-        console.log("Total", totalTime);
         const response = await axios.post(
           "https://site--timetrackr--phx29rm2mv76.code.run/activity/addTime",
 
@@ -47,7 +44,6 @@ const ModalEdit = ({
         if (error) {
           setError("An error occurred");
         }
-        console.log(error);
       }
     }
   };

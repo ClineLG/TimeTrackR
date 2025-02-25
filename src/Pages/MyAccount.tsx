@@ -31,15 +31,16 @@ const MyAccount = (props: AccountProps) => {
             },
           }
         );
-        console.log(response.data);
         // setEmail(response.data.email);
         // setUsername(response.data.username);
         setData(response.data);
         setLoading(false);
       } catch (error) {
         if (error) {
-          console.log(error);
-          setError("An error occurred.");
+          if (error) {
+            setError("An error occurred.");
+          }
+
           setLoading(false);
         }
       }
