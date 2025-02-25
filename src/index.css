@@ -6,10 +6,10 @@
   min-height: 100vh;
   padding-bottom: 80px;
 }
-html,
-body {
-  overflow-x: hidden;
-}
-body {
-  position: relative;
+@media only screen and (max-width: 600px) {
+  .VictoryContainer {
+    user-select: auto !important;
+    pointer-events: auto !important;
+    touch-action: auto !important;
+  }
 }

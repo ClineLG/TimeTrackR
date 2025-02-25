@@ -172,15 +172,16 @@ const Statistics = () => {
           </div>
         </div>
       ) : (
-        <div className="w-full overflow-x-scroll">
+        <div className="w-full overflow-x-scroll ">
           <div
-            className="bg-gray-800 rounded-2xl  mx-auto"
+            className="bg-gray-800 rounded-2xl mx-auto VictoryContainer"
             style={{
               width: Data
                 ? Data.length <= 3
                   ? Data.length * 300
                   : Data.length * 150
                 : "auto",
+              height: 500,
             }}
           >
             <VictoryChart
