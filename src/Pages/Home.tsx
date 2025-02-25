@@ -6,16 +6,15 @@ import ModalEdit from "../components/ModalEdit";
 import { MdAddCircleOutline } from "react-icons/md";
 
 const Home = ({ checkUser }: TokenProps) => {
-  const [activities, setActivities] = useState<
-    | {
-        name: string;
-        _id: string;
-        pending:
-          | { year: number; week: number; day: number; time: number }
-          | undefined;
-      }[]
-    | null
-  >(null);
+  type ActivityType = {
+    name: string;
+    _id: string;
+    pending:
+      | { year: number; week: number; day: number; time: number }
+      | undefined;
+  };
+
+  const [activities, setActivities] = useState<ActivityType[] | null>(null);
 
   const [loading, setLoading] = useState(true);
   const [create, setCreate] = useState(false);

@@ -4,10 +4,14 @@ import { UserContext } from "../context/UserContext";
 import { ActivityProps } from "../ActivitiesProps";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
+
 const Year = (props: ActivityProps) => {
   const { setData, setError, setLoading } = props;
+
   const [year, setYear] = useState<number>(new Date().getFullYear());
+
   const { checkUser } = useContext(UserContext);
+
   useEffect(() => {
     setError("");
 
@@ -50,7 +54,7 @@ const Year = (props: ActivityProps) => {
     };
     fetchData();
   }, [year]);
-  //   const weekArr = Array.from({ length: 52 }, (_, i) => i + 1);
+
   return (
     <div className="flex items-center justify-center  p-4 rounded-2xl">
       <button

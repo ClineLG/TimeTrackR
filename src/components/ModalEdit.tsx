@@ -26,11 +26,21 @@ const ModalEdit = ({
       setError("Please select a day");
     } else {
       try {
+        const dateInUTC = new Date(
+          date.getTime() - date.getTimezoneOffset() * 60000
+        ).toISOString();
+
         const totalTime = Number(time.hours) * 60 + Number(time.minutes);
+
         const response = await axios.post(
           "https://site--timetrackr--phx29rm2mv76.code.run/activity/addTime",
 
-          { id: idToEdit.id, date: date, time: totalTime, name: idToEdit.name },
+          {
+            id: idToEdit.id,
+            date: dateInUTC,
+            time: totalTime,
+            name: idToEdit.name,
+          },
           {
             headers: {
               Authorization: "Bearer " + checkUser(),

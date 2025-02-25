@@ -31,8 +31,7 @@ const MyAccount = (props: AccountProps) => {
             },
           }
         );
-        // setEmail(response.data.email);
-        // setUsername(response.data.username);
+
         setData(response.data);
         setLoading(false);
       } catch (error) {
